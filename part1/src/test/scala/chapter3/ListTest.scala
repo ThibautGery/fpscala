@@ -2,7 +2,7 @@ package chapter3
 
 import org.specs2.mutable.Specification
 
-import List.{sum, tail, setHead }
+import List._
 
 
 class ListTest extends Specification {
@@ -31,6 +31,23 @@ class ListTest extends Specification {
 
     "return the list with the head replaces" >> {
       setHead(4, List(1,2,3)) must_== List(4,2,3)
+    }
+  }
+
+
+
+  "drop " >> {
+
+    "return the same list if no item to drop" >> {
+      drop(List(1,2,3, 4), 0) must_== List(1, 2, 3, 4)
+    }
+
+    "return the tail list if one item to drop" >> {
+      drop(List(1,2,3, 4), 1) must_== List( 2, 3, 4)
+    }
+
+    "return the list with the head replaces" >> {
+      drop(List(1,2,3, 4), 2) must_== List(3, 4)
     }
   }
 }
