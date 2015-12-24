@@ -21,4 +21,9 @@ object List {
     if (as.isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
 
+  def tail[A](list: List[A]): List[A] = list match {
+    case Nil => throw new NoSuchElementException("List is Nil not tail")
+    case Cons(_, t) => t
+  }
+
 }

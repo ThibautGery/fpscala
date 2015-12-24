@@ -2,7 +2,7 @@ package chapter3
 
 import org.specs2.mutable.Specification
 
-import List.sum
+import List.{sum, tail }
 
 
 class ListTest extends Specification {
@@ -16,6 +16,11 @@ class ListTest extends Specification {
         case _ => 101
       }
       x must_== 3
+    }
+  }
+  "tail function" >> {
+    "return the tail" >> {
+      tail(Cons(1, Cons(2, Nil))) must_== Cons(2, Nil)
     }
   }
 }
