@@ -2,7 +2,7 @@ package chapter3
 
 import org.specs2.mutable.Specification
 
-import List.{sum, tail }
+import List.{sum, tail, setHead }
 
 
 class ListTest extends Specification {
@@ -20,7 +20,17 @@ class ListTest extends Specification {
   }
   "tail function" >> {
     "return the tail" >> {
-      tail(Cons(1, Cons(2, Nil))) must_== Cons(2, Nil)
+      tail(List(1,2)) must_== List(2)
+    }
+  }
+
+  "set head" >> {
+    "return Nil if new is Nil" >> {
+      setHead(Nil, List(1,2,3)) must_== Nil
+    }
+
+    "return the list with the head replaces" >> {
+      setHead(4, List(1,2,3)) must_== List(4,2,3)
     }
   }
 }
