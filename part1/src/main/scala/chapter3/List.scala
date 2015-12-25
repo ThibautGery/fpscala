@@ -139,11 +139,15 @@ object List {
     }
 
   def constructorAdd(a1 : List[Int], a2: List[Int]) : List[Int] = {
+    zipWith(a1, a2)((a, b) => a + b)
+  }
+
+  def zipWith[A, B, C](a1: List[A], a2: List[B])(f: (A, B) => C): List[C] = {
     @tailrec
-    def loop(b1 : List[Int], b2: List[Int], acc: List[Int]): List[Int] = {
+    def loop(b1 : List[A], b2: List[B], acc: List[C]): List[C] = {
       b1 match {
         case Nil => acc
-        case Cons(x, xs) => loop(xs, tail(b2), Cons(x + head(b2), acc))
+        case Cons(x, xs) => loop(xs, tail(b2), Cons(f(x, head(b2)), acc))
       }
     }
     if(length(a1) != length(a2)) {
@@ -151,5 +155,4 @@ object List {
     }
     reverse(loop(a1, a2, Nil))
   }
-
 }
