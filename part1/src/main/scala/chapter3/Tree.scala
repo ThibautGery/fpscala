@@ -17,4 +17,14 @@ object Tree {
     }
     loop(t)
   }
+
+  def max(t: Tree[Int]): Int = {
+    def loop(t: Tree[Int]): Int = {
+      t match {
+        case Leaf(a) => a
+        case Branch(a, b) => loop(a) max loop(b)
+      }
+    }
+    loop(t)
+  }
 }
