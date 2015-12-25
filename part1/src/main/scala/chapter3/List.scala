@@ -100,4 +100,7 @@ object List {
   def foldRight2[A,B](as: List[A], z: B)(f: (A, B) => B): B =
     foldLeft(reverse(as), z)((a, b) => f(b, a))
 
+
+  def append[A](a1: List[A], a2: List[A]): List[A] =
+    foldRight2(a1,a2)((elem, acc) => Cons(elem,acc))
 }

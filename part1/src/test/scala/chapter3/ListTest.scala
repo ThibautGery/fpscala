@@ -152,4 +152,18 @@ class ListTest extends Specification {
       foldRight2(List(1,2,3), Nil:List[Int])(Cons(_,_)) must_== List(1, 2, 3)
     }
   }
+
+  "append function" >> {
+    "append the second one to the first" >> {
+      append(List(1, 2), List(3, 4)) must_== List(1, 2, 3, 4)
+    }
+
+    "return the first one if the second is empty" >> {
+      append(List(1, 2), Nil) must_== List(1, 2)
+    }
+
+    "return the second one if the first is empty" >> {
+      append(Nil, List(1, 2)) must_== List(1, 2)
+    }
+  }
 }
