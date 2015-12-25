@@ -50,4 +50,28 @@ class ListTest extends Specification {
       drop(List(1,2,3, 4), 2) must_== List(3, 4)
     }
   }
+
+  "drop while" >> {
+
+    "return the same list if no item to drop" >> {
+      dropWhile(List(1,2,3, 4), (x: Int) => false) must_== List(1, 2, 3, 4)
+    }
+
+    "return the empty list if we drop all item" >> {
+      dropWhile(List(1,2,3, 4), (x: Int) => true) must_== Nil
+    }
+
+    "return Nil if mepty list" >> {
+      dropWhile(Nil, (x: Int) => false) must_== Nil
+    }
+
+    "return the same list if the items are not in first position" >> {
+      dropWhile(List(1, -2, 3, -4), (x: Int) => x <= 0) must_==  List(1, -2, 3, -4)
+    }
+
+    "return the list without its first element given it matchs the predicate" >> {
+      dropWhile(List(-1, -2, 3, -4), (x: Int) => x <= 0) must_==  List( 3, -4)
+    }
+
+  }
 }

@@ -31,12 +31,18 @@ object List {
     case a => Cons(a, tail(list))
   }
 
-  def drop[A](l: List[A], n: Int): List[A] = {
+  def drop[A](l: List[A], n: Int): List[A] =
     if( n == 0) {
       l
     } else {
       drop(tail(l), n-1)
     }
-  }
+
+
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] =
+    l match {
+      case Nil => Nil
+      case Cons(a, t) => if(f(a)) dropWhile(t, f) else l
+    }
 
 }
