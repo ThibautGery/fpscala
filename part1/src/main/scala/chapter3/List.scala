@@ -78,9 +78,13 @@ object List {
 
 
   def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
-    as match {
-      case Nil => z
-      case Cons(x, xs) => f(foldLeft(xs, z)(f), x)
+    @tailrec
+    def loop(curr: List[A], acc: B): B = {
+      curr match {
+        case Nil => acc
+        case Cons(x, xs) => loop(xs,f(acc, x))
+      }
     }
+    loop(as, z)
   }
 }

@@ -123,5 +123,9 @@ class ListTest extends Specification {
     "return the init value for an empty list" >> {
       foldLeft(List(1), 9)((elem, acc) => elem + acc) must_== 10
     }
+
+    "return the init value for an empty list" >> {
+      foldLeft(List(1, 2, 3, 4), 0)((elem, acc) => elem + acc) must_== 10
+    }
   }
 }
