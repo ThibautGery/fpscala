@@ -146,4 +146,10 @@ class ListTest extends Specification {
       reverse(List(1, 2, 3)) must_== List(3, 2, 1)
     }
   }
+
+  "fold right implemented with foldLeft" >> {
+    "can return the same list" >> {
+      foldRight2(List(1,2,3), Nil:List[Int])(Cons(_,_)) must_== List(1, 2, 3)
+    }
+  }
 }
