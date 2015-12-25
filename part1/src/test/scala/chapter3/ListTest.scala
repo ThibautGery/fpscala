@@ -170,4 +170,10 @@ class ListTest extends Specification {
       append(List(List(1, 2), List(3, 4), List(5, 6))) must_== List(1, 2, 3, 4, 5, 6)
     }
   }
+
+  "add one function" >> {
+    "add one to list of int" >> {
+      addOne(List(0, 1, 2, 3, 4)) must_== List(1, 2, 3, 4, 5)
+    }
+  }
 }
