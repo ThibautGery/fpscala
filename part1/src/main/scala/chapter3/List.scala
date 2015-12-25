@@ -155,4 +155,24 @@ object List {
     }
     reverse(loop(a1, a2, Nil))
   }
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+    @tailrec
+    def checkSubSequence(sup: List[A], sub: List[A]): Boolean =
+      (sup, sub) match {
+        case (_, Nil) => true
+        case (Nil, _) => false
+        case (Cons(x, xs), Cons(y, ys)) if x == y => checkSubSequence(xs, ys)
+        case (Cons(x, xs), Cons(y, ys)) if x != y => false
+      }
+
+    @tailrec
+    def loop(sup: List[A]): Boolean =
+      sup match {
+        case Nil => false
+        case a if checkSubSequence(a, sub) => true
+        case Cons(x, xs) if !checkSubSequence(Cons(x, xs), sub) => loop(xs)
+      }
+
+    loop(sup)
+  }
 }

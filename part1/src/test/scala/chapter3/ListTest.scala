@@ -206,4 +206,26 @@ class ListTest extends Specification {
       constructorAdd(List(1, 2, 3), List(4, 5, 6)) must_== List(5,7,9)
     }
   }
+
+  "hasSubsequence" >> {
+    "false when no sub sequence" >> {
+      hasSubsequence(List(0, 1, 2, 3), List(3, 4)) must_== false
+    }
+
+    "true when lists are equals" >> {
+      hasSubsequence(List(0, 1, 2, 3), List(0, 1, 2, 3)) must_== true
+    }
+
+    "true when the list start with the subsequence" >> {
+      hasSubsequence(List(0, 1, 2, 3), List(0, 1, 2)) must_== true
+    }
+
+    "false when the subsequence is longer than the list" >> {
+      hasSubsequence(List(0, 1, 2, 3), List(0, 1, 2, 3, 4)) must_== false
+    }
+
+    "true when subsequence in the list" >> {
+      hasSubsequence(List(0, 1, 2, 3), List(1, 2)) must_== true
+    }
+  }
 }
