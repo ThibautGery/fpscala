@@ -41,8 +41,8 @@ object List {
 
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] =
     l match {
-      case Nil => Nil
-      case Cons(a, t) => if(f(a)) dropWhile(t, f) else l
+      case Cons(a, t) if f(a) =>  dropWhile(t, f)
+      case list => list
     }
 
   def init[A](l: List[A]): List[A] = {
