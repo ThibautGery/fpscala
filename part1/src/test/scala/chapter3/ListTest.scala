@@ -93,4 +93,10 @@ class ListTest extends Specification {
       init(List(1, 2, 3, 4, 5, 6)) must_== List(1, 2, 3, 4, 5)
     }
   }
+
+  "fold right" >> {
+    "can return the same list" >> {
+      foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_)) must_== List(1, 2, 3)
+    }
+  }
 }
