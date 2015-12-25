@@ -115,4 +115,13 @@ class ListTest extends Specification {
       List.length(List(1, 2, 3, 4, 5)) must_== 5
     }
   }
+
+  "fold left tail recursive" >> {
+    "return the init value for an empty list" >> {
+      foldLeft(Nil, 9)((l, acc) => acc) must_== 9
+    }
+    "return the init value for an empty list" >> {
+      foldLeft(List(1), 9)((elem, acc) => elem + acc) must_== 10
+    }
+  }
 }
