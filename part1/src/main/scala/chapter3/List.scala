@@ -108,8 +108,13 @@ object List {
     foldRight2(listOfList,Nil:List[A] )((elem, acc) => append(elem, acc) )
 
   def addOne(as: List[Int]): List[Int] =
-    foldRight2(as, Nil: List[Int])( (elem, acc) => Cons(elem + 1, acc))
+    map(as)(_ + 1)
 
   def listToString(as: List[Double]): List[String] =
-    foldRight2(as, Nil: List[String])( (elem, acc) => Cons(elem.toString, acc))
+    map(as)(_.toString)
+
+  def map[A,B](as: List[A])(f: A => B): List[B] = {
+    foldRight2(as, Nil: List[B])( (elem, acc) => Cons(f(elem), acc))
+
+  }
 }
