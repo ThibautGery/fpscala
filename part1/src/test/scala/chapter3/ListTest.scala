@@ -99,4 +99,14 @@ class ListTest extends Specification {
       foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_)) must_== List(1, 2, 3)
     }
   }
+
+  "length" >> {
+    "return 0 for an empty list" >> {
+      List.length(List()) must_== 0
+    }
+
+    "return the size of an list" >> {
+      List.length(List(1, 2, 3, 4, 5)) must_== 5
+    }
+  }
 }
