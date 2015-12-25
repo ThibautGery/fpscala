@@ -45,4 +45,27 @@ object Tree {
     }
   }
 
+  def fold[A,B](t: Tree[A], z: B)(f: (A, B) => B, g: (B, B) => B): B = {
+    def loop(curr: Tree[A], acc: B): B = {
+      curr match {
+        case Leaf(a) => f(a, acc)
+        case Branch(l, r) => g(loop(l, acc), loop(r, acc))
+      }
+    }
+    loop(t, z)
+  }
+
+  def maxDepth2(t: Tree[Int]): Int =
+    fold(t, 0)((elem, acc) => acc +1, (a, b) => a.max(b) + 1)
+
+
+  def map2[A,B](t: Tree[A])(f: A => B): Tree[B] =
+    fold[A,Tree[B]](t, null)((a, _) => Leaf(f(a)), (b1, b2) => Branch(b1, b2))
+
+  def max2(t: Tree[Int]): Int =
+    fold(t, 0)((el, acc) => el, (a, b) => a max b)
+
+
+  def size2[A](t: Tree[A]) : Int =
+    fold(t, 0)((_, acc) => 1 + acc, (a, b) => a + b +1)
 }
