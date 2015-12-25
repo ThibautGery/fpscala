@@ -1,5 +1,9 @@
 package chapter3
 
+import java.util.NoSuchElementException
+
+import scala.annotation.tailrec
+
 sealed trait List[+A]
 case object Nil extends List[Nothing]
 case class Cons[+A](head: A, tail: List[A]) extends List[A]
@@ -24,6 +28,11 @@ object List {
   def tail[A](list: List[A]): List[A] = list match {
     case Nil => throw new NoSuchElementException("List is Nil not tail")
     case Cons(_, t) => t
+  }
+
+  def head[A](list: List[A]) : A = list match {
+    case Nil => throw new NoSuchElementException("List is Nil, no head")
+    case Cons(a, _) => a
   }
 
   def setHead[A](newHead: A, list: List[A]): List[A] = newHead match {

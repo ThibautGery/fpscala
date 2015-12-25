@@ -24,6 +24,12 @@ class ListTest extends Specification {
     }
   }
 
+  "head function" >> {
+    "return the first element" >> {
+      head(List(1,2)) must_== 1
+    }
+  }
+
   "set head" >> {
     "return Nil if new is Nil" >> {
       setHead(Nil, List(1,2,3)) must_== Nil
