@@ -27,4 +27,15 @@ object Tree {
     }
     loop(t)
   }
+
+  def maxDepth(t: Tree[Int]): Int = {
+    def loop(t: Tree[Int], acc: Int): Int = {
+      t match {
+        case Leaf(a) => acc + 1
+        case Branch(a, b) => loop(a, acc + 1) max loop(b, acc + 1)
+      }
+    }
+    loop(t, 0)
+  }
+
 }
