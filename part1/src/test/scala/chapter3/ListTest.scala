@@ -127,5 +127,13 @@ class ListTest extends Specification {
     "return the init value for an empty list" >> {
       foldLeft(List(1, 2, 3, 4), 0)((elem, acc) => elem + acc) must_== 10
     }
+
+    "the sum using foldleft" >> {
+      sum3(List(1, 2, 3, 4)) must_== 10
+    }
+
+    "the product using foldleft" >> {
+      product3(List(1, 2, 3, 2)) must_== 12
+    }
   }
 }
