@@ -136,4 +136,14 @@ class ListTest extends Specification {
       product3(List(1, 2, 3, 2)) must_== 12
     }
   }
+
+  "the reverse function" >> {
+    "return Nil if fonction is Nil" >> {
+      reverse(Nil) must_== Nil
+    }
+
+    "reverse the list" >> {
+      reverse(List(1, 2, 3)) must_== List(3, 2, 1)
+    }
+  }
 }

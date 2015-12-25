@@ -93,4 +93,6 @@ object List {
 
   def product3(ns: List[Double]) =
     foldLeft(ns, 1.0)(_ * _)
+
+  def reverse[A](l: List[A]): List[A] = foldLeft(l, Nil: List[A])((acc, elem) => Cons(elem, acc))
 }
