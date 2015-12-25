@@ -74,4 +74,23 @@ class ListTest extends Specification {
     }
 
   }
+
+  "init" >> {
+
+    "return Nil if empty list" >> {
+      init(Nil) must_== Nil
+    }
+
+    "return Nil if list of one element" >> {
+      init(Nil) must_== Nil
+    }
+
+    "remove the last element of a list of size 2" >> {
+      init(List(1, 2)) must_== List(1)
+    }
+
+    "remove the last element of a list" >> {
+      init(List(1, 2, 3, 4, 5, 6)) must_== List(1, 2, 3, 4, 5)
+    }
+  }
 }
