@@ -194,4 +194,10 @@ class ListTest extends Specification {
       flatMap(List(1,2,3))(i => List(i,i)) must_== List(1,1,2,2,3,3)
     }
   }
+
+  "filter2" >> {
+    "get only odd number" >> {
+      filter2(List(1, 2, 3, 4))(_ % 2 == 0) must_== List(2, 4)
+    }
+  }
 }
