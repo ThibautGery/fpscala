@@ -176,4 +176,10 @@ class ListTest extends Specification {
       addOne(List(0, 1, 2, 3, 4)) must_== List(1, 2, 3, 4, 5)
     }
   }
+
+  "tostring function" >> {
+    "convert elems to string" >> {
+      listToString(List(1.1, 2.2, 3.3, 4.4)) must_== List("1.1", "2.2", "3.3", "4.4")
+    }
+  }
 }

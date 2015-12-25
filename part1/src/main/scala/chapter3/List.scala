@@ -109,4 +109,7 @@ object List {
 
   def addOne(as: List[Int]): List[Int] =
     foldRight2(as, Nil: List[Int])( (elem, acc) => Cons(elem + 1, acc))
+
+  def listToString(as: List[Double]): List[String] =
+    foldRight2(as, Nil: List[String])( (elem, acc) => Cons(elem.toString, acc))
 }
