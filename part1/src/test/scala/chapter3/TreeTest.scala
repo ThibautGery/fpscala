@@ -41,4 +41,11 @@ class TreeTest extends Specification {
       maxDepth(Branch(Branch(Leaf(4), Leaf(5)), Branch(Leaf(2), Branch(Leaf(6), Leaf(7))))) must_== 4
     }
   }
+
+  "map" >> {
+    "can count the char in a node" >> {
+      Tree.map(Branch(Leaf("abc"), Leaf("poiuyt")))(a => a.length) must_== Branch(Leaf(3), Leaf(6))
+      Tree.map(Branch(Branch(Leaf("abc"), Leaf("poiuyt")), Leaf("poiuyt")))(a => a.length) must_== Branch(Branch(Leaf(3), Leaf(6)), Leaf(6))
+    }
+  }
 }
