@@ -182,4 +182,10 @@ class ListTest extends Specification {
       listToString(List(1.1, 2.2, 3.3, 4.4)) must_== List("1.1", "2.2", "3.3", "4.4")
     }
   }
+
+  "filter" >> {
+    "get only odd number" >> {
+      filter(List(1, 2, 3, 4))(_ % 2 == 0) must_== List(2, 4)
+    }
+  }
 }
