@@ -116,7 +116,7 @@ object List {
   def map[A,B](as: List[A])(f: A => B): List[B] =
     foldRight2(as, Nil: List[B])( (elem, acc) => Cons(f(elem), acc))
 
-  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+  def filter[A](as: List[A])(f: A => Boolean): List[A] =
     foldRight2(as, Nil: List[A])((elem, acc) => {
       if(f(elem)) {
         Cons(elem, acc)
@@ -124,5 +124,9 @@ object List {
         acc
       }
     })
+
+  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = {
+    foldLeft(as, Nil: List[B])( (acc, elem) => append(acc, f(elem)))
   }
+
 }
