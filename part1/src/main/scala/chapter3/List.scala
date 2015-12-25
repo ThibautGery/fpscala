@@ -103,4 +103,7 @@ object List {
 
   def append[A](a1: List[A], a2: List[A]): List[A] =
     foldRight2(a1,a2)((elem, acc) => Cons(elem,acc))
+
+  def append[A](listOfList: List[List[A]]): List[A] =
+    foldRight2(listOfList,Nil:List[A] )((elem, acc) => append(elem, acc) )
 }

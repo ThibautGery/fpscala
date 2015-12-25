@@ -165,5 +165,9 @@ class ListTest extends Specification {
     "return the second one if the first is empty" >> {
       append(Nil, List(1, 2)) must_== List(1, 2)
     }
+
+    "concatenate list of list" >> {
+      append(List(List(1, 2), List(3, 4), List(5, 6))) must_== List(1, 2, 3, 4, 5, 6)
+    }
   }
 }
