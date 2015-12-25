@@ -200,4 +200,10 @@ class ListTest extends Specification {
       filter2(List(1, 2, 3, 4))(_ % 2 == 0) must_== List(2, 4)
     }
   }
+
+  "constructorAdd" >> {
+    "add value to construct new list" >> {
+      constructorAdd(List(1, 2, 3), List(4, 5, 6)) must_== List(5,7,9)
+    }
+  }
 }

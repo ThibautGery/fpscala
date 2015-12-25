@@ -137,4 +137,19 @@ object List {
         Nil
       }
     }
+
+  def constructorAdd(a1 : List[Int], a2: List[Int]) : List[Int] = {
+    @tailrec
+    def loop(b1 : List[Int], b2: List[Int], acc: List[Int]): List[Int] = {
+      b1 match {
+        case Nil => acc
+        case Cons(x, xs) => loop(xs, tail(b2), Cons(x + head(b2), acc))
+      }
+    }
+    if(length(a1) != length(a2)) {
+      throw new ArrayIndexOutOfBoundsException("both list must be the same size")
+    }
+    reverse(loop(a1, a2, Nil))
+  }
+
 }
