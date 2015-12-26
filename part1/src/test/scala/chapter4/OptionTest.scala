@@ -27,4 +27,15 @@ class OptionTest extends Specification {
       Some("ezezeze").flatMap( a => Some(a.length)) must_== Some(7)
     }
   }
+
+  "get or else" >> {
+    "Some of a value return the value" >> {
+      Some(1).getOrElse(2) must_== 1
+    }
+
+    "None return the default" >> {
+      None.getOrElse(2) must_== 2
+
+    }
+  }
 }
