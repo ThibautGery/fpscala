@@ -1,5 +1,11 @@
 package chapter4
 
-sealed trait Option[+A]
-case class Some[+A](get: A) extends Option[A]
-case object None extends Option[Nothing]
+sealed trait Option[+A] {
+  def map[B](f: A => B): Option[B]
+}
+case class Some[+A](get: A) extends Option[A] {
+  override def map[B](f: (A) => B): Option[B] = Some(f(get))
+}
+case object None extends Option[Nothing] {
+  override def map[B](f: (Nothing) => B): Option[B] = None
+}
