@@ -52,4 +52,14 @@ class OptionTest extends Specification {
       None.filter(a => true) must_== None
     }
   }
+
+  "or else" >> {
+    "Some of a value return the value" >> {
+      Some(1).orElse(Some(2)) must_== Some(1)
+    }
+
+    "None return the default" >> {
+      None.orElse(Some(2)) must_== Some(2)
+    }
+  }
 }

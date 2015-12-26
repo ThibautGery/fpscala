@@ -16,7 +16,7 @@ case class Some[+A](get: A) extends Option[A] {
 
   override def filter(f: (A) => Boolean): Option[A] = if(f(get)) Some(get) else None
 
-  override def orElse[B >: A](ob: => Option[B]): Option[B] = ???
+  override def orElse[B >: A](ob: => Option[B]): Option[B] = Some(get)
 }
 case object None extends Option[Nothing] {
   override def map[B](f: (Nothing) => B): Option[B] = None
@@ -27,5 +27,5 @@ case object None extends Option[Nothing] {
 
   override def getOrElse[B >: Nothing](default: => B): B = default
 
-  override def orElse[B >: Nothing](ob: => Option[B]): Option[B] = ???
+  override def orElse[B >: Nothing](ob: => Option[B]): Option[B] = ob
 }
