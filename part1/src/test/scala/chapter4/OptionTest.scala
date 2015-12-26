@@ -38,4 +38,18 @@ class OptionTest extends Specification {
 
     }
   }
+
+  "filter" >> {
+    "Some of a value with good filter" >> {
+      Some(1).filter(a => true) must_== Some(1)
+    }
+
+    "Some of a value with bad filter" >> {
+      Some(1).filter(a => false) must_== None
+    }
+
+    "None return None" >> {
+      None.filter(a => true) must_== None
+    }
+  }
 }
