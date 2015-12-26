@@ -1,7 +1,7 @@
 package chapter4
 
 import org.specs2.mutable.Specification
-
+import Option._
 
 class OptionTest extends Specification {
   "map function" >> {
@@ -60,6 +60,17 @@ class OptionTest extends Specification {
 
     "None return the default" >> {
       None.orElse(Some(2)) must_== Some(2)
+    }
+  }
+
+  "map2" >> {
+    "return None if one None" >> {
+      map2[Int, Int, Int](None, Some(1))((a, b) => a + b) must_== None
+      map2[Int, Int, Int](Some(1), None)((a, b) => a + b) must_== None
+    }
+
+    "return the computed value if two some" >> {
+      map2[Int, Int, Int](Some(1), Some(1))((a, b) => a + b) must_== Some(2)
     }
   }
 }
