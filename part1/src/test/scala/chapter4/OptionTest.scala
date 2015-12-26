@@ -13,4 +13,18 @@ class OptionTest extends Specification {
       Some("ezezeze").map(_.length) must_== Some(7)
     }
   }
+
+  "flat map function" >> {
+    "shoud transform None in None" >> {
+      None.flatMap(t => t) must_== None
+    }
+
+    "shoud return none if function is none" >> {
+      Some("ezezeze").flatMap( a => None) must_== None
+    }
+
+    "shoud count the size of an string" >> {
+      Some("ezezeze").flatMap( a => Some(a.length)) must_== Some(7)
+    }
+  }
 }
