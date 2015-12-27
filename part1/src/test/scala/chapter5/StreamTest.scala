@@ -44,4 +44,14 @@ class StreamTest extends Specification {
       Stream(1, 2, 3, -1, -2).takeWhile(a => a > 0).toList must_== List(1, 2, 3)
     }
   }
+
+  "forAll" >> {
+    "return true if all element are valid" >>{
+      Stream(1, 2, 3, 4).forAll(a => a > 0) must_== true
+    }
+
+    "return false if one element is not valid" >>{
+      Stream(1, 2, -3, 4).forAll(a => a > 0) must_== false
+    }
+  }
 }
