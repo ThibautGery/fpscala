@@ -7,7 +7,7 @@ sealed trait Either[+E, +A] {
   def map2[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C]
 }
 case class Left[+E](value: E) extends Either[E, Nothing] {
-  override def map[B](f: (Nothing) => B): Either[E, B] = ???
+  override def map[B](f: (Nothing) => B): Either[E, B] = Left(value)
 
   override def map2[EE >: E, B, C](b: Either[EE, B])(f: (Nothing, B) => C): Either[EE, C] = ???
 
@@ -16,7 +16,7 @@ case class Left[+E](value: E) extends Either[E, Nothing] {
   override def orElse[EE >: E, B >: Nothing](b: => Either[EE, B]): Either[EE, B] = ???
 }
 case class Right[+A](value: A) extends Either[Nothing, A] {
-  override def map[B](f: (A) => B): Either[Nothing, B] = ???
+  override def map[B](f: (A) => B): Either[Nothing, B] = Right(f(value))
 
   override def map2[EE >: Nothing, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C] = ???
 
