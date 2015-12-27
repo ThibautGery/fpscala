@@ -83,4 +83,14 @@ class OptionTest extends Specification {
       sequence(List[Option[Int]](Some(1), Some(2))) must_== Some(List(1, 2))
     }
   }
+
+  "traverse" >> {
+    "return None if one is None" >> {
+      traverse(List[Option[Int]](None, Some(2)))(i => i.map(_ *2)) must_== None
+    }
+
+    "return Some of list if only Some in elements" >> {
+      traverse(List[Option[Int]](Some(1), Some(2)))(i => i.map(_ *2)) must_== Some(List(2, 4))
+    }
+  }
 }
