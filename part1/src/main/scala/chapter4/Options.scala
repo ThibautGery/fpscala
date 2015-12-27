@@ -33,10 +33,8 @@ case object None extends Option[Nothing] {
 
 object Option {
   def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = {
-    (a, b) match {
-      case (Some(av), Some(bv)) => Some(f(av, bv))
-      case (None, _) => None
-      case (_,  None) => None
-    }
+    a.flatMap(aa =>
+        b.map(bb =>
+          f(aa, bb)))
   }
 }
