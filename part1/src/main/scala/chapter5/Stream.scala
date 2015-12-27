@@ -1,10 +1,23 @@
 package chapter5
 
+import scala.annotation.tailrec
+
 
 sealed trait Stream[+A] {
   def headOption: Option[A] = this match {
     case Empty => None
     case Cons(h, t) => Some(h())
+  }
+
+  def toList: List[A]= {
+    @tailrec
+    def loop(stream: Stream[A], acc: List[A]): List[A] = {
+      stream match {
+        case Empty => acc
+        case Cons(h, t) => loop(t(), h() :: acc)
+      }
+    }
+    loop(this, Nil).reverse
   }
 }
 case object Empty extends Stream[Nothing]
