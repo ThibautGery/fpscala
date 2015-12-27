@@ -73,4 +73,14 @@ class OptionTest extends Specification {
       map2[Int, Int, Int](Some(1), Some(1))((a, b) => a + b) must_== Some(2)
     }
   }
+
+  "sequence" >> {
+    "return None if one is None" >> {
+      sequence(List[Option[Int]](None, Some(2))) must_== None
+    }
+
+    "return Some of list if only Some in elements" >> {
+      sequence(List[Option[Int]](Some(1), Some(2))) must_== Some(List(1, 2))
+    }
+  }
 }

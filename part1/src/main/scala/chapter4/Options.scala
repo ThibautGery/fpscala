@@ -36,4 +36,21 @@ object Option {
     for{ aa <- a
           bb <- b} yield f(aa, bb)
   }
+
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = {
+    val newList = a.takeWhile(
+      {
+        case Some(_) => true
+        case None => false
+      })
+      .map({
+        case Some(a) => a
+        case None => throw new Exception("impossibru")
+      })
+    if(newList.length == a.length) {
+      Some(newList)
+    } else {
+      None
+    }
+  }
 }
