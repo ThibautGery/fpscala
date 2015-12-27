@@ -9,7 +9,7 @@ sealed trait Either[+E, +A] {
 case class Left[+E](value: E) extends Either[E, Nothing] {
   override def map[B](f: (Nothing) => B): Either[E, B] = Left(value)
 
-  override def map2[EE >: E, B, C](b: Either[EE, B])(f: (Nothing, B) => C): Either[EE, C] = ???
+  override def map2[EE >: E, B, C](b: Either[EE, B])(f: (Nothing, B) => C): Either[EE, C] = Left(value)
 
   override def flatMap[EE >: E, B](f: (Nothing) => Either[EE, B]): Either[EE, B] = Left(value)
 
@@ -18,7 +18,10 @@ case class Left[+E](value: E) extends Either[E, Nothing] {
 case class Right[+A](value: A) extends Either[Nothing, A] {
   override def map[B](f: (A) => B): Either[Nothing, B] = Right(f(value))
 
-  override def map2[EE >: Nothing, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C] = ???
+  override def map2[EE >: Nothing, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C] = b match {
+    case Left(err) => Left(err)
+    case Right(data) => Right(f(value, data))
+  }
 
   override def flatMap[EE >: Nothing, B](f: (A) => Either[EE, B]): Either[EE, B] = f(value)
 
