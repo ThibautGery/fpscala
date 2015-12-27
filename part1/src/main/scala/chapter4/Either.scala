@@ -13,7 +13,7 @@ case class Left[+E](value: E) extends Either[E, Nothing] {
 
   override def flatMap[EE >: E, B](f: (Nothing) => Either[EE, B]): Either[EE, B] = Left(value)
 
-  override def orElse[EE >: E, B >: Nothing](b: => Either[EE, B]): Either[EE, B] = ???
+  override def orElse[EE >: E, B >: Nothing](b: => Either[EE, B]): Either[EE, B] = b
 }
 case class Right[+A](value: A) extends Either[Nothing, A] {
   override def map[B](f: (A) => B): Either[Nothing, B] = Right(f(value))
@@ -25,5 +25,5 @@ case class Right[+A](value: A) extends Either[Nothing, A] {
 
   override def flatMap[EE >: Nothing, B](f: (A) => Either[EE, B]): Either[EE, B] = f(value)
 
-  override def orElse[EE >: Nothing, B >: A](b: => Either[EE, B]): Either[EE, B] = ???
+  override def orElse[EE >: Nothing, B >: A](b: => Either[EE, B]): Either[EE, B] = Right(value)
 }

@@ -27,4 +27,16 @@ class EitherTest extends Specification {
       Right("Not an error").flatMap(a => Left(a.length)) must_== Left(12)
     }
   }
+
+  "orElse" >> {
+    "of Left return the default" >> {
+      Left("Error").orElse(Right("toto")) must_== Right("toto")
+
+    }
+
+    "of Right return the value" >> {
+      Right("titi").orElse(Right("toto")) must_== Right("titi")
+
+    }
+  }
 }
