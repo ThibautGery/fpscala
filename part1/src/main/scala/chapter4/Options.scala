@@ -39,7 +39,10 @@ object Option {
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] = {
     a.foldRight[Option[List[A]]](Some(Nil))( (elem, acc) => {
-      acc.flatMap( a => elem.map( el => el :: a))
+      for{
+        a <- acc
+        el <- elem
+      } yield el :: a
     })
   }
 }
