@@ -27,3 +27,16 @@ case class Right[+A](value: A) extends Either[Nothing, A] {
 
   override def orElse[EE >: Nothing, B >: A](b: => Either[EE, B]): Either[EE, B] = Right(value)
 }
+
+object Either {
+  def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] = traverse(es)(a => a)
+
+  def traverse[E, A, B](as: List[A])(
+    f: A => Either[E, B]): Either[E, List[B]] =
+    as.foldRight[Either[E, List[B]]](Right(Nil))( (elem, acc) => {
+    for{
+        a <- acc
+        el <- f(elem)
+      } yield el :: a
+    })
+}

@@ -1,5 +1,6 @@
 package chapter4
 
+import chapter4.Either._
 import org.specs2.mutable.Specification
 
 
@@ -39,4 +40,25 @@ class EitherTest extends Specification {
 
     }
   }
+
+  "sequence" >> {
+    "return Left if one is Left" >> {
+      sequence(List[Either[String, Int]](Left("error"), Right(12))) must_== Left("error")
+    }
+
+    "return Righy of list if there is only Right in elements" >> {
+      sequence(List[Either[String, Int]](Right(1), Right(2))) must_== Right(List(1, 2))
+    }
+  }
+
+  "traverse" >> {
+    "return None if one is None" >> {
+      traverse(List[Either[String, Int]](Left("error"), Right(2)))(i => i.map(_ *2)) must_== Left("error")
+    }
+
+    "return Some of list if only Some in elements" >> {
+      traverse(List[Either[String, Int]](Right(1), Right(2)))(i => i.map(_ *2)) must_== Right(List(2, 4))
+    }
+  }
+
 }
