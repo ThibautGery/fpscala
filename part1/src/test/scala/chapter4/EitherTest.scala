@@ -9,8 +9,22 @@ class EitherTest extends Specification {
       Left("Error").map(a => a) must_== Left("Error")
     }
 
-    "of Right returnt the Right with the updated value" >> {
+    "of Right return the Right with the updated value" >> {
       Right("Not an error").map(a => a.length) must_== Right(12)
+    }
+  }
+
+  "flatmap" >> {
+    "of Left return the same Left" >> {
+      Left("Error").flatMap(a => Left(a)) must_== Left("Error")
+    }
+
+    "of Right return the Right with the updated value" >> {
+      Right("Not an error").flatMap(a => Right(a.length)) must_== Right(12)
+    }
+
+    "of Right return the Left with the updated value" >> {
+      Right("Not an error").flatMap(a => Left(a.length)) must_== Left(12)
     }
   }
 }
