@@ -34,4 +34,14 @@ class StreamTest extends Specification {
       Stream(1, 2, 3).drop(1).toList must_== List(2, 3)
     }
   }
+
+  "takeWhile" >> {
+    "none return empty" >> {
+      Stream(1, 2, 3).takeWhile((a) => false).toList must_== Nil
+    }
+
+    "a number return the correct number" >> {
+      Stream(1, 2, 3, -1, -2).takeWhile(a => a > 0).toList must_== List(1, 2, 3)
+    }
+  }
 }
