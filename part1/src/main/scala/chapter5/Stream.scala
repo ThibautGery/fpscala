@@ -31,6 +31,18 @@ sealed trait Stream[+A] {
     }
     Stream.fromList(loop(this, Empty, n).toList.reverse)
   }
+
+  def drop(n: Int): Stream[A] = {
+    @tailrec
+    def loop(stream: Stream[A], n: Int): Stream[A] = {
+      (n, stream) match {
+        case (0, _) => stream
+        case (_, Empty) => throw new NoSuchElementException("impossible to drop more element than the stream size")
+        case (_, Cons(h, t)) => loop(t(), n - 1)
+      }
+    }
+    loop(this, n)
+  }
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]

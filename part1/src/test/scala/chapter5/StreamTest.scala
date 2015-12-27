@@ -24,4 +24,14 @@ class StreamTest extends Specification {
       Stream(1, 2, 3).take(2).toList must_== List(1, 2)
     }
   }
+
+  "drop" >> {
+    "none return empty" >> {
+      Stream(1, 2, 3).drop(0).toList must_==  List(1, 2, 3)
+    }
+
+    "a number return the correct number" >> {
+      Stream(1, 2, 3).drop(1).toList must_== List(2, 3)
+    }
+  }
 }
