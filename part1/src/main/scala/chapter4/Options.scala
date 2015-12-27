@@ -38,19 +38,8 @@ object Option {
   }
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] = {
-    val newList = a.takeWhile(
-      {
-        case Some(_) => true
-        case None => false
-      })
-      .map({
-        case Some(a) => a
-        case None => throw new Exception("impossibru")
-      })
-    if(newList.length == a.length) {
-      Some(newList)
-    } else {
-      None
-    }
+    a.foldRight[Option[List[A]]](Some(Nil))( (elem, acc) => {
+      acc.flatMap( a => elem.map( el => el :: a))
+    })
   }
 }
