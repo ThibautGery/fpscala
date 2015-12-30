@@ -100,6 +100,11 @@ class StreamTest extends Specification {
     "return the second one if the first is empty" >> {
       Stream.empty[Int].append(Stream(1, 2)).toList must_== List(1, 2)
     }
+  }
 
+  "flatmap" >> {
+    "works" >> {
+      Stream(1,2,3).flatMap(i => Stream(i,i)).toList must_== List(1,1,2,2,3,3)
+    }
   }
 }
