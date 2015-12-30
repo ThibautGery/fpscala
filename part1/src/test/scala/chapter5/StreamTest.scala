@@ -77,4 +77,14 @@ class StreamTest extends Specification {
       Stream(1, 2, 3).map(_ * 2).toList must_== List(2, 4, 6)
     }
   }
+
+  "filter" >> {
+    "return None if empty stream" >> {
+      Stream.empty[Int].filter(a => true) must_== Stream.empty[Int]
+    }
+
+    "return Some(head) if non empty stream" >> {
+      Stream(1, 2, 3).filter(a => a % 2 != 0).toList must_== List(1, 3)
+    }
+  }
 }
