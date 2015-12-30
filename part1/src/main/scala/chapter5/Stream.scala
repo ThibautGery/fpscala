@@ -55,6 +55,15 @@ sealed trait Stream[+A] {
     Stream.fromList(loop(this, Empty, p).toList.reverse)
   }
 
+  def takeWhile2(p: A => Boolean): Stream[A] =
+    this.foldRight(Stream.empty[A])((elem, acc) => {
+      if(p(elem)) {
+        Stream.cons(elem, acc)
+      } else {
+        Stream.empty[A]
+      }
+    })
+
   def exists(p: A => Boolean): Boolean =
     foldRight(false)((a, b) => p(a) || b)
 

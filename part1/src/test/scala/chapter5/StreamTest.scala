@@ -38,10 +38,12 @@ class StreamTest extends Specification {
   "takeWhile" >> {
     "none return empty" >> {
       Stream(1, 2, 3).takeWhile((a) => false).toList must_== Nil
+      Stream(1, 2, 3).takeWhile2((a) => false).toList must_== Nil
     }
 
     "a number return the correct number" >> {
-      Stream(1, 2, 3, -1, -2).takeWhile(a => a > 0).toList must_== List(1, 2, 3)
+      Stream(1, 2, 3, -1, -2, 1).takeWhile(a => a > 0).toList must_== List(1, 2, 3)
+      Stream(1, 2, 3, -1, -2, 1).takeWhile2(a => a > 0).toList must_== List(1, 2, 3)
     }
   }
 
