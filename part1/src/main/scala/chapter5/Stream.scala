@@ -9,6 +9,9 @@ sealed trait Stream[+A] {
     case Cons(h, t) => Some(h())
   }
 
+  def headOption2: Option[A] =
+    foldRight[Option[A]](None)((elem, _) => Some(elem))
+
   def toList: List[A]= {
     @tailrec
     def loop(stream: Stream[A], acc: List[A]): List[A] = {

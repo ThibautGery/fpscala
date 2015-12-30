@@ -56,4 +56,15 @@ class StreamTest extends Specification {
       Stream(1, 2, -3, 4).forAll(a => a > 0) must_== false
     }
   }
+  "headOption" >> {
+    "return None if empty stream" >> {
+      Stream.empty.headOption must_== None
+      Stream.empty.headOption2 must_== None
+    }
+
+    "return Some(head) if non empty stream" >> {
+      Stream(1, 2, 3).headOption must_== Some(1)
+      Stream(1, 2, 3).headOption2 must_== Some(1)
+    }
+  }
 }
