@@ -87,4 +87,19 @@ class StreamTest extends Specification {
       Stream(1, 2, 3).filter(a => a % 2 != 0).toList must_== List(1, 3)
     }
   }
+
+  "append function" >> {
+    "append the second one to the first" >> {
+      Stream(1, 2).append(Stream(3, 4)).toList must_== List(1, 2, 3, 4)
+    }
+
+    "return the first one if the second is empty" >> {
+      Stream(1, 2).append(Stream.empty[Int]).toList must_== List(1, 2)
+    }
+
+    "return the second one if the first is empty" >> {
+      Stream.empty[Int].append(Stream(1, 2)).toList must_== List(1, 2)
+    }
+
+  }
 }
