@@ -114,5 +114,6 @@ object Stream {
 
   def fromList[A](as: List[A]): Stream[A] =
     if (as.isEmpty) empty else cons(as.head, apply(as.tail: _*))
-
+  
+  def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
 }

@@ -107,4 +107,11 @@ class StreamTest extends Specification {
       Stream(1,2,3).flatMap(i => Stream(i,i)).toList must_== List(1,1,2,2,3,3)
     }
   }
+
+
+  "infinite stream" >> {
+    "constant stream" >> {
+      Stream.constant("toto").take(10).toList must_== List("toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto")
+    }
+  }
 }
