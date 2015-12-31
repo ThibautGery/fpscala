@@ -118,4 +118,11 @@ object Stream {
   def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
 
   def from(n: Int): Stream[Int] = Stream.cons(n, from(n + 1))
+
+  def fibs(): Stream[Int] = {
+    def next(a: Int, b: Int): Stream[Int] = {
+      Stream.cons(a + b , next(b, a + b))
+    }
+    cons(0, cons(1, next(0, 1)))
+  }
 }

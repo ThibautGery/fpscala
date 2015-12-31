@@ -117,5 +117,9 @@ class StreamTest extends Specification {
     "from stream" >> {
       Stream.from(4).take(10).toList must_== List(4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
     }
+
+    "fibonacci stream" >> {
+      Stream.fibs().take(8).toList must_== List(0, 1, 1, 2, 3, 5, 8, 13)
+    }
   }
 }
