@@ -132,6 +132,13 @@ object Stream {
     cons(0, cons(1, next(0, 1)))
   }
 
+  def fibs2(): Stream[Int] =
+    Stream(0, 1).append(unfold((0, 1))(elems => {
+      val next1 = elems._2
+      val next2 = elems._2 + elems._1
+      Some(next2, (next1, next2))
+    }))
+
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
     f(z) match {
       case None => Stream.empty[A]
