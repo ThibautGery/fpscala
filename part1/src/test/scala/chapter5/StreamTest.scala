@@ -121,5 +121,15 @@ class StreamTest extends Specification {
     "fibonacci stream" >> {
       Stream.fibs().take(8).toList must_== List(0, 1, 1, 2, 3, 5, 8, 13)
     }
+
+    "unfold" >> {
+      "empty stream" >> {
+        Stream.unfold(0)(a => None) must_== Stream.empty[Int]
+      }
+
+      "decresing stream" >> {
+        Stream.unfold(10)(a => if(a > 0) Some((a, a- 1)) else None).toList must_== List(10, 9, 8, 7, 6, 5, 4, 3, 2 , 1)
+      }
+    }
   }
 }
