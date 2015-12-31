@@ -113,5 +113,9 @@ class StreamTest extends Specification {
     "constant stream" >> {
       Stream.constant("toto").take(10).toList must_== List("toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto")
     }
+
+    "from stream" >> {
+      Stream.from(4).take(10).toList must_== List(4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
+    }
   }
 }
