@@ -117,6 +117,9 @@ object Stream {
 
   def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
 
+  def constant2[A](a: A): Stream[A] =
+    unfold(a)(el => Some((el,el)))
+
   def from(n: Int): Stream[Int] = Stream.cons(n, from(n + 1))
 
   def fibs(): Stream[Int] = {

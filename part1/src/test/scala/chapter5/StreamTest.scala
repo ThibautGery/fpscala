@@ -112,6 +112,7 @@ class StreamTest extends Specification {
   "infinite stream" >> {
     "constant stream" >> {
       Stream.constant("toto").take(10).toList must_== List("toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto")
+      Stream.constant2("toto").take(10).toList must_== List("toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto", "toto")
     }
 
     "from stream" >> {
