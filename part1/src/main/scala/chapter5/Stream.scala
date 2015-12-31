@@ -122,6 +122,9 @@ object Stream {
 
   def from(n: Int): Stream[Int] = Stream.cons(n, from(n + 1))
 
+  def from2(n: Int): Stream[Int] =
+    unfold(n)(el => Some((el,el + 1)))
+
   def fibs(): Stream[Int] = {
     def next(a: Int, b: Int): Stream[Int] = {
       Stream.cons(a + b , next(b, a + b))
