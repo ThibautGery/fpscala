@@ -79,6 +79,13 @@ sealed trait Stream[+A] {
       }
     })
 
+  def takeWhile3(p: A => Boolean): Stream[A] =
+    Stream.unfold(this) {
+      case Cons(h, t) if p(h())=> Some(h(), t())
+      case _ => None
+    }
+
+
   def exists(p: A => Boolean): Boolean =
     foldRight(false)((a, b) => p(a) || b)
 
