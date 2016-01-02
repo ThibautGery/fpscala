@@ -71,10 +71,12 @@ class StreamTest extends Specification {
   "map" >> {
     "return None if empty stream" >> {
       Stream.empty[Int].map[Int](a => a) must_== Stream.empty[Int]
+      Stream.empty[Int].map2[Int](a => a) must_== Stream.empty[Int]
     }
 
     "return Some(head) if non empty stream" >> {
       Stream(1, 2, 3).map(_ * 2).toList must_== List(2, 4, 6)
+      Stream(1, 2, 3).map2(_ * 2).toList must_== List(2, 4, 6)
     }
   }
 
