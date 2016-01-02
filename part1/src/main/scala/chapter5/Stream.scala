@@ -35,6 +35,18 @@ sealed trait Stream[+A] {
     Stream.fromList(loop(this, Empty, n).toList.reverse)
   }
 
+  def take2(n: Int): Stream[A]=
+    Stream.unfold((this, n))(a => {
+      if(a._2 > 0) {
+        a._1 match {
+          case Empty => throw new NoSuchElementException("impossible to get more element than the stream size")
+          case Cons(h, t) => Some(h(),(t(), a._2 - 1))
+        }
+      } else {
+        None
+      }
+    } )
+
   def drop(n: Int): Stream[A] = {
     @tailrec
     def loop(stream: Stream[A], n: Int): Stream[A] = {

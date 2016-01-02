@@ -18,10 +18,12 @@ class StreamTest extends Specification {
   "take" >> {
     "none return empty" >> {
       Stream(1, 2, 3).take(0).toList must_== Nil
+      Stream(1, 2, 3).take2(0).toList must_== Nil
     }
 
     "a number return the correct number" >> {
       Stream(1, 2, 3).take(2).toList must_== List(1, 2)
+      Stream(1, 2, 3).take2(2).toList must_== List(1, 2)
     }
   }
 
