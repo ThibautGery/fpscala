@@ -144,6 +144,20 @@ class StreamTest extends Specification {
     }
   }
 
+  "start with" >> {
+    "return true if both are equal" >> {
+      Stream(1, 2, 3) startsWith Stream(1, 2, 3) must_== true
+    }
+
+    "return true if the first start with the second" >> {
+      Stream(1, 2, 3) startsWith Stream(1, 2) must_== true
+    }
+
+    "return false if the first don't start with the second" >> {
+      Stream(1, 2, 3) startsWith Stream(2, 3) must_== false
+    }
+  }
+
 
   "infinite stream" >> {
     "constant stream" >> {
