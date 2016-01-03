@@ -126,6 +126,24 @@ class StreamTest extends Specification {
     }
   }
 
+  "zipAll" >> {
+    "return empty for empty stream" >> {
+      Stream.empty[String].zipAll(Stream.empty[Int]) must_== Stream.empty[(Option[String], Option[Int])]
+    }
+
+    "Complete with none for the first stream" >> {
+      Stream.empty[String].zipAll(Stream(1, 2, 3)).toList must_== Stream((None, Some(1)), (None, Some(2)), (None, Some(3))).toList
+    }
+
+    "Complete with none for the second stream" >> {
+      Stream("a", "b", "c" ).zipAll(Stream.empty[Int]).toList must_== Stream((Some("a"), None), (Some("b"), None), (Some("c"), None)).toList
+    }
+
+    "return only some if both have elements" >> {
+      Stream("a", "b", "c" ).zipAll(Stream(1, 2, 3)).toList must_== Stream((Some("a"), Some(1)), (Some("b"), Some(2)), (Some("c"), Some(3))).toList
+    }
+  }
+
 
   "infinite stream" >> {
     "constant stream" >> {
