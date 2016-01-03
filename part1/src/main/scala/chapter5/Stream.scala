@@ -149,6 +149,9 @@ sealed trait Stream[+A] {
       case (Empty, _) => Some(Empty, (Empty, false))
     }
 
+  def tails2: Stream[Stream[A]] =
+    scanRight[Stream[A]](Empty)((el, s) => Stream.cons(el, s))
+
   def hasSubsequence[S >: A](s: Stream[S]): Boolean =
     tails exists (_ startsWith s)
 

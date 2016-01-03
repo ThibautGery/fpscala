@@ -161,6 +161,7 @@ class StreamTest extends Specification {
   "tail" >> {
     "return stream of empty for an empty stream" >> {
       Stream.empty[Int].tails.toList must_== List(Stream.empty[Int])
+      Stream.empty[Int].tails2.toList must_== List(Stream.empty[Int])
     }
 
     "return the stream of stream" >> {
@@ -169,6 +170,12 @@ class StreamTest extends Specification {
       results(1).toList must_== List(2, 3)
       results(2).toList must_== List(3)
       results(3).toList must_== List()
+
+      val results2 = Stream(1, 2, 3).tails2.toList
+      results2.head.toList must_== List(1, 2, 3)
+      results2(1).toList must_== List(2, 3)
+      results2(2).toList must_== List(3)
+      results2(3).toList must_== List()
     }
   }
 
