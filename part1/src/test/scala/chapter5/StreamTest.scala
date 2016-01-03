@@ -114,6 +114,18 @@ class StreamTest extends Specification {
     }
   }
 
+  "zipWith" >> {
+    "return empty for empty streams" >> {
+      Stream.empty[String].zipWith(Stream.empty[Int])((s,t) => 1.0) must_== Stream.empty[Double]
+      Stream.empty[String].zipWith(Stream(1, 2, 3 ))((s,t) => 1.0) must_== Stream.empty[Double]
+      Stream("a", "b", "c" ).zipWith(Stream.empty[Int])((s,t) => 1.0) must_== Stream.empty[Double]
+    }
+
+    "zip the two stream" >> {
+      Stream("a", "bb", "ccc").zipWith(Stream("a", "bb", "ccc"))((s1, s2) => s1.concat(s2).length).toList must_== Stream(2, 4, 6).toList
+    }
+  }
+
 
   "infinite stream" >> {
     "constant stream" >> {
