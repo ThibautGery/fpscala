@@ -172,6 +172,24 @@ class StreamTest extends Specification {
     }
   }
 
+  "has subsequence" >> {
+    "return false if no subsequence" >> {
+      Stream(1, 2, 3, 4).hasSubsequence(Stream(3,2)) must_== false
+    }
+
+    "return true if starting with subsequence" >> {
+      Stream(1, 2, 3, 4).hasSubsequence(Stream(1, 2)) must_== true
+    }
+
+    "return true if ending with subsequence" >> {
+      Stream(1, 2, 3, 4).hasSubsequence(Stream(3, 4)) must_== true
+    }
+
+    "return true if subsequence" >> {
+      Stream(1, 2, 3, 4).hasSubsequence(Stream(2, 3)) must_== true
+    }
+  }
+
 
   "infinite stream" >> {
     "constant stream" >> {
