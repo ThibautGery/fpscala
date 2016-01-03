@@ -158,6 +158,20 @@ class StreamTest extends Specification {
     }
   }
 
+  "tail" >> {
+    "return stream of empty for an empty stream" >> {
+      Stream.empty[Int].tails.toList must_== List(Stream.empty[Int])
+    }
+
+    "return the stream of stream" >> {
+      val results = Stream(1, 2, 3).tails.toList
+      results.head.toList must_== List(1, 2, 3)
+      results(1).toList must_== List(2, 3)
+      results(2).toList must_== List(3)
+      results(3).toList must_== List()
+    }
+  }
+
 
   "infinite stream" >> {
     "constant stream" >> {
