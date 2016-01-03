@@ -190,6 +190,12 @@ class StreamTest extends Specification {
     }
   }
 
+  "scanRight" >> {
+    "return step result of foldRight" >> {
+      Stream(1,2,3).scanRight(0)(_ + _).toList must_== List(6,5,3,0)
+    }
+  }
+
 
   "infinite stream" >> {
     "constant stream" >> {

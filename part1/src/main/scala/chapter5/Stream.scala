@@ -151,6 +151,14 @@ sealed trait Stream[+A] {
 
   def hasSubsequence[S >: A](s: Stream[S]): Boolean =
     tails exists (_ startsWith s)
+
+  def scanRight[S](z: S)(f: (A, S) => S): Stream[S] =
+    // can we do without recalculating flatmap every times ? using lazy values ?
+    Stream.unfold[S, (Stream[A], Boolean)]((this, true)){
+      case (_,  false) => None
+      case (Cons(h, t), _) => Some(Cons(h, t).foldRight[S](z)((a, s) => f(a, s)), (t(), true))
+      case (Empty, _) => Some(z, (Empty, false))
+    }
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
