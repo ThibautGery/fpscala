@@ -72,4 +72,24 @@ class RngTest extends Specification with ScalaCheck {
     }.set(minTestsOk = 500)
   }
 
+
+  "Rng ints" >> {
+    "must be return different ints" >> prop { (seed: Long) =>
+      val randomList = RNG.ints(3)(new SimpleRNG(seed))._1
+      randomList.head must be_!=(randomList(1))
+      randomList.head must be_!=(randomList(2))
+    }.set(minTestsOk = 500)
+
+    "must be different than the previous one" >> prop { (seed: Long) =>
+      val (rand1, gen1) = RNG.ints(2)(new SimpleRNG(seed))
+      val rand2 = RNG.ints(2)(gen1)._1
+
+      rand1.head must be_!=(rand2.head)
+      rand1(1) must be_!=(rand2(1))
+
+      rand1.head must be_!=(rand2(1))
+      rand2.head must be_!=(rand1(1))
+
+    }.set(minTestsOk = 500)
+  }
 }
