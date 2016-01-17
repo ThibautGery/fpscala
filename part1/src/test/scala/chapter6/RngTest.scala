@@ -1,5 +1,6 @@
 package chapter6
 
+import chapter6.RNG.Rand
 import org.specs2.mutable.Specification
 import org.specs2.ScalaCheck
 
@@ -121,11 +122,39 @@ class RngTest extends Specification with ScalaCheck {
     }.set(minTestsOk = 500)
   }
 
-  "nonNegativeEven" >> {
+  "Rng nonNegativeEven" >> {
     "must return non negative and divisible by two integer" >> prop { (seed: Long) =>
       val (rand, gen) = RNG.nonNegativeEven(new SimpleRNG(seed))
       rand must be_>=(0)
       rand % 2 must be_==(0)
+    }.set(minTestsOk = 500)
+  }
+
+  "Rng sequence" >> {
+    val input = List[Rand[Int]](RNG.int, RNG.nonNegativeEven, RNG.nonNegativeInt)
+    def newSeq(seed: Long) = RNG.sequence(input)(new SimpleRNG(seed))._1
+
+
+    "generate integer" >> prop { (seed: Long) =>
+      val list = newSeq(seed)
+
+      list.head must beBetween(Int.MinValue, Int.MaxValue)
+    }.set(minTestsOk = 500)
+
+    "generate nonNegativeEven" >> prop { (seed: Long) =>
+      val list = newSeq(seed)
+
+
+      list(1) must be_>=(0)
+      list(1)% 2 must be_==(0)
+
+    }.set(minTestsOk = 500)
+
+    "generate nonNegativeInt" >> prop { (seed: Long) =>
+      val list = newSeq(seed)
+
+      list(2) must be_>=(0)
+
     }.set(minTestsOk = 500)
   }
 }
