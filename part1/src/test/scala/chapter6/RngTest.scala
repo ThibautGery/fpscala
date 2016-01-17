@@ -92,4 +92,12 @@ class RngTest extends Specification with ScalaCheck {
 
     }.set(minTestsOk = 500)
   }
+
+  "nonNegativeEven" >> {
+    "must return non negative and divisible by two integer" >> prop { (seed: Long) =>
+      val (rand, gen) = RNG.nonNegativeEven(new SimpleRNG(seed))
+      rand must be_>=(0)
+      rand % 2 must be_==(0)
+    }.set(minTestsOk = 500)
+  }
 }
