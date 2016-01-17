@@ -43,10 +43,7 @@ object RNG {
     }
   }
 
-  def double(rng: RNG): (Double, RNG) = {
-    val (rand, gen) = nonNegativeInt(rng)
-    (("0." + rand.toString).toDouble , gen)
-  }
+  val double: Rand[Double] = map(nonNegativeInt)(rand => ("0." + rand.toString).toDouble)
 
   def intDouble(rng: RNG): ((Int,Double), RNG) = {
     val (int, gen1) = rng.nextInt
