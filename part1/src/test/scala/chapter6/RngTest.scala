@@ -56,7 +56,35 @@ class RngTest extends Specification with ScalaCheck {
     }.set(minTestsOk = 500)
   }
 
-  "Rng doubleInt" >> {
+  "Rng randIntDouble" >> {
+    "must be return two different random" >> prop { (seed: Long) =>
+      val (intRand, doubleRand) = RNG.randIntDouble(new SimpleRNG(seed))._1
+      doubleRand must be_!=(("0." + Math.abs(intRand).toString).toDouble)
+    }.set(minTestsOk = 500)
+
+    "must be different than the previous one" >> prop { (seed: Long) =>
+      val (rand1, gen1) = RNG.randIntDouble(new SimpleRNG(seed))
+      val rand2 = RNG.randIntDouble(gen1)._1
+      rand1._1 must be_!=(rand2._1)
+      rand1._2 must be_!=(rand2._2)
+    }.set(minTestsOk = 500)
+  }
+
+  "Rng randDoubleInt" >> {
+    "must be return two different random" >> prop { (seed: Long) =>
+      val (doubleRand, intRand) = RNG.randDoubleInt(new SimpleRNG(seed))._1
+      doubleRand must be_!=(("0." + Math.abs(intRand).toString).toDouble)
+    }.set(minTestsOk = 500)
+
+    "must be different than the previous one" >> prop { (seed: Long) =>
+      val (rand1, gen1) = RNG.randDoubleInt(new SimpleRNG(seed))
+      val rand2 = RNG.randDoubleInt(gen1)._1
+      rand1._1 must be_!=(rand2._1)
+      rand1._2 must be_!=(rand2._2)
+    }.set(minTestsOk = 500)
+  }
+
+  "Rng double3" >> {
     "must be return three different double" >> prop { (seed: Long) =>
       val (d1, d2, d3) = RNG.double3(new SimpleRNG(seed))._1
       d1 must be_!=(d2)
