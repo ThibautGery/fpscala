@@ -25,4 +25,9 @@ object RNG {
       (rand, gen)
     }
   }
+
+  def double(rng: RNG): (Double, RNG) = {
+    val (rand, gen) = nonNegativeInt(rng)
+    (("0." + rand.toString).toDouble , gen)
+  }
 }

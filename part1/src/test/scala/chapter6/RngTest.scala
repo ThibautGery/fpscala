@@ -17,4 +17,15 @@ class RngTest extends Specification with ScalaCheck {
 
   }
 
+  "Rng double" >> {
+    "must be between 0 and 1 (not including)" >> prop { (seed: Long) =>
+      RNG.double(new SimpleRNG(seed))._1 must beBetween(0.0, 1.0).excludingEnd
+    }.set(minTestsOk = 500)
+
+    "must be different than the previous one" >> prop { (seed: Long) =>
+      val (rand1, gen1) = RNG.double(new SimpleRNG(seed))
+      RNG.double(gen1)._1 must be_!=(rand1)
+    }.set(minTestsOk = 500)
+  }
+
 }
