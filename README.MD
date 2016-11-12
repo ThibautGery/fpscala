@@ -10,4 +10,10 @@ Requirements
  * Sbt
 
 
+Commands
+--------
 
+Run the tests
+```sh
+sbt test
+```
