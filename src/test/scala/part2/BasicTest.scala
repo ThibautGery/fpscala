@@ -52,4 +52,9 @@ class BasicTest extends Specification {
       Basics.isSorted[String](Array("q","qqqq","qqq"), isSizeInferior) must beFalse
     }
   }
+  "the curry function" should {
+    "spice up the the fonction" in {
+      Basics.curry[Int,String,Int]((a, b) => a + b.length )(1)("data") must_==(5)
+    }
+  }
 }
