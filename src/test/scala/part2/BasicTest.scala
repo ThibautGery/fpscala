@@ -3,25 +3,53 @@ package part2
 import org.specs2.mutable.Specification
 
 
-class FibonacciTest extends Specification {
+class BasicTest extends Specification {
   "Fibonacci" should {
     "return an empty list when asking 0 number" in {
-      Fibonacci.fibonacci(0) must be empty
+      Basics.fib(0) must be empty
     }
 
     "return 0 list when asking 1 number" in {
-      Fibonacci.fibonacci(1) must have length 1
-      Fibonacci.fibonacci(1) must contain(0)
+      Basics.fib(1) must have length 1
+      Basics.fib(1) must contain(0)
     }
 
     "return 0 and 1 list when asking 2 number" in {
-      Fibonacci.fibonacci(2) must have length 2
-      Fibonacci.fibonacci(2) must contain(0, 1)
+      Basics.fib(2) must have length 2
+      Basics.fib(2) must contain(0, 1)
     }
 
     "return 0, 1, 1, 2, 3, 5, 8 list when asking 7 number" in {
-      Fibonacci.fibonacci(7) must have length 7
-      Fibonacci.fibonacci(7) must contain(0, 1, 1, 2, 3, 5, 8)
+      Basics.fib(7) must have length 7
+      Basics.fib(7) must contain(0, 1, 1, 2, 3, 5, 8)
+    }
+  }
+  "isSorted" should {
+    def isInferior(a: Int, b:Int) =  a < b
+    def isSizeInferior(a: String, b:String) =  a.length < b.length
+
+    "return true for an empty array" in {
+      Basics.isSorted[Int](Array(), isInferior) must beTrue
+    }
+
+    "return true for an array of size 1" in {
+      Basics.isSorted[Int](Array(1), isInferior) must beTrue
+    }
+
+    "return false for unsorted array of int" in {
+      Basics.isSorted[Int](Array(1,3,2), isInferior) must beFalse
+    }
+
+    "return true for sorted array of int" in {
+      Basics.isSorted[Int](Array(1,2,3), isInferior) must beTrue
+    }
+
+    "return true for sorted array of string" in {
+      Basics.isSorted[String](Array("q","qq","qqq"), isSizeInferior) must beTrue
+    }
+
+    "return false for sorted array of string" in {
+      Basics.isSorted[String](Array("q","qqqq","qqq"), isSizeInferior) must beFalse
     }
   }
 }
