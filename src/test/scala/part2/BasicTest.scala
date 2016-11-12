@@ -54,7 +54,13 @@ class BasicTest extends Specification {
   }
   "the curry function" should {
     "spice up the the fonction" in {
-      Basics.curry[Int,String,Int]((a, b) => a + b.length )(1)("data") must_==(5)
+      Basics.curry[Int, String, Int]((a, b) => a + b.length )(1)("data") must_==(5)
+    }
+  }
+
+  "the curry function" should {
+    "spice up the the fonction" in {
+      Basics.uncurry[String, Int, Int](a => b => a.length + b)("data", 1) must_==(5)
     }
   }
 }
