@@ -10,4 +10,9 @@ object List {
     case Cons(x, xs) => x + sum(xs)
     case _ => 0
   }
+
+  def apply[A](items: A*): List[A] = {
+    if(items.isEmpty) Nil
+    else Cons(items.head, apply(items.tail: _*))
+  }
 }
