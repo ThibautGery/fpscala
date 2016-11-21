@@ -2,7 +2,7 @@ package fpinscala.datastructures
 
 import org.specs2.mutable.Specification
 
-class TestSpecs extends Specification {
+class ListTest extends Specification {
   "The sum" should {
     "return 0  for an empty list" in {
       List.sum(List()) must_== 0
@@ -36,9 +36,18 @@ class TestSpecs extends Specification {
       List.tail(List()) must throwA( new NoSuchElementException("The list is empty"))
     }
 
-    "return the lsit except for the first element" in {
+    "return the list except for the first element" in {
       List.tail(List(1, 2, 3)) must_== List(2, 3)
     }
   }
 
+   "The set head function" should {
+     "throw an exception if the list is empty" in {
+       List.setHead(34, Nil) must throwA( new NoSuchElementException("The list is empty"))
+     }
+
+     "return the list except for the first element" in {
+       List.setHead(34, List(1, 2, 3)) must_== List(34, 2, 3)
+     }
+   }
 }

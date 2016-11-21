@@ -27,4 +27,8 @@ object List {
     if(items.isEmpty) Nil
     else Cons(items.head, apply(items.tail: _*))
   }
+
+  def setHead[A](newHead: A, list: List[A]): List[A] = {
+    Cons(newHead, List.tail(list))
+  }
 }
