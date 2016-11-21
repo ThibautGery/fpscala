@@ -11,6 +11,13 @@ object List {
     case _ => 0
   }
 
+  def product(ds: List[Double]): Double = {
+    ds match {
+      case Nil => 1
+      case Cons(0, _) => 0
+      case Cons(x, xs) => x * product(xs)
+    }
+  }
   def apply[A](items: A*): List[A] = {
     if(items.isEmpty) Nil
     else Cons(items.head, apply(items.tail: _*))
