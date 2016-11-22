@@ -25,7 +25,7 @@ object List {
       case Cons(x, xs) => x * product(xs)
     }
   }
-  
+
   def apply[A](items: A*): List[A] = {
     if(items.isEmpty) Nil
     else Cons(items.head, apply(items.tail: _*))
@@ -34,6 +34,9 @@ object List {
   def setHead[A](newHead: A, list: List[A]): List[A] = Cons(newHead, List.tail(list))
 
   @tailrec
-  def drop[A](l: List[A], n: Int): List[A] = drop(tail(l), n - 1)
+  def drop[A](l: List[A], n: Int): List[A] = {
+    if(n == 0) l
+    else drop(tail(l), n - 1)
+  }
 
 }

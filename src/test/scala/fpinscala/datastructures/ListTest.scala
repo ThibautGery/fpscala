@@ -61,7 +61,7 @@ class ListTest extends Specification {
     }
 
     "return the last elem when removing 2 items" in {
-      List.drop(List(1, 2, 3, 4), 2) must_== List(3)
+      List.drop(List(1, 2, 3, 4), 2) must_== List(3, 4)
     }
   }
 }
