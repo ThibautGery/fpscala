@@ -1,5 +1,7 @@
 package fpinscala.datastructures
 
+import scala.annotation.tailrec
+
 
 sealed trait List[+A]
 case object Nil extends List[Nothing]
@@ -23,12 +25,15 @@ object List {
       case Cons(x, xs) => x * product(xs)
     }
   }
+  
   def apply[A](items: A*): List[A] = {
     if(items.isEmpty) Nil
     else Cons(items.head, apply(items.tail: _*))
   }
 
-  def setHead[A](newHead: A, list: List[A]): List[A] = {
-    Cons(newHead, List.tail(list))
-  }
+  def setHead[A](newHead: A, list: List[A]): List[A] = Cons(newHead, List.tail(list))
+
+  @tailrec
+  def drop[A](l: List[A], n: Int): List[A] = drop(tail(l), n - 1)
+
 }

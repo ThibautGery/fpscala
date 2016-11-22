@@ -50,4 +50,18 @@ class ListTest extends Specification {
        List.setHead(34, List(1, 2, 3)) must_== List(34, 2, 3)
      }
    }
+
+  "The drop function" should {
+    "throw an exception if the list not big enough" in {
+      List.drop(List(1, 2, 3), 4) must throwA( new NoSuchElementException("The list is empty"))
+    }
+
+    "return Nil when removing the list length" in {
+      List.drop(List(1, 2, 3), 3) must_== List()
+    }
+
+    "return the last elem when removing 2 items" in {
+      List.drop(List(1, 2, 3, 4), 2) must_== List(3)
+    }
+  }
 }
