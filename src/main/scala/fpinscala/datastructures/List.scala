@@ -8,6 +8,12 @@ case object Nil extends List[Nothing]
 case class Cons[+A](head: A, tail: List[A]) extends List[A]
 
 object List {
+  def dropWhile[A](list: List[A], f: A => Boolean): List[A]= list match {
+    case Nil => Nil
+    case Cons(x, xs) if f(x) => dropWhile(xs, f)
+    case _ => list
+  }
+
   def tail[A](list: List[A]): List[A] = list match {
     case Nil => throw new NoSuchElementException("The list is empty")
     case Cons(x, xs) => xs

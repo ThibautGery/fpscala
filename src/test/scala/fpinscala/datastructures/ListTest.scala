@@ -64,4 +64,20 @@ class ListTest extends Specification {
       List.drop(List(1, 2, 3, 4), 2) must_== List(3, 4)
     }
   }
+
+  "The dropwhile function" should {
+    "return the full list when the predicate is always false" in {
+      List.dropWhile(List(1, 2, 3), (a:Int) => false) must_== List(1, 2, 3)
+    }
+
+    "return nil when the list is empty" in {
+      List.dropWhile(Nil, (a:Int) => true) must_== Nil
+    }
+
+    "return the element when it does't match anymore" in {
+      List.dropWhile(List(1, 2, 3), (a:Int) => a <=2) must_== List(3)
+    }
+
+
+  }
 }
