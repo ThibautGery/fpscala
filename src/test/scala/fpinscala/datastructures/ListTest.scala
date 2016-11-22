@@ -77,7 +77,19 @@ class ListTest extends Specification {
     "return the element when it does't match anymore" in {
       List.dropWhile(List(1, 2, 3), (a:Int) => a <=2) must_== List(3)
     }
+  }
 
+  "The append function" should {
+    "return a2 when a1 is Nil" in {
+      List.append(Nil, List(1, 2)) must_== List(1, 2)
+    }
 
+    "return a1 when a2 is Nil" in {
+      List.append(List(1, 2), Nil) must_== List(1, 2)
+    }
+
+    "return a1 then a2" in {
+      List.append(List(1, 2), List(3, 4)) must_== List(1, 2, 3, 4)
+    }
   }
 }

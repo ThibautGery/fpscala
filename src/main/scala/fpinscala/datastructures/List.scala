@@ -8,6 +8,7 @@ case object Nil extends List[Nothing]
 case class Cons[+A](head: A, tail: List[A]) extends List[A]
 
 object List {
+  @tailrec
   def dropWhile[A](list: List[A], f: A => Boolean): List[A]= list match {
     case Nil => Nil
     case Cons(x, xs) if f(x) => dropWhile(xs, f)
@@ -43,6 +44,13 @@ object List {
   def drop[A](l: List[A], n: Int): List[A] = {
     if(n == 0) l
     else drop(tail(l), n - 1)
+  }
+
+  def append[A](a1: List[A], a2: List[A]): List[A] = {
+    a1 match {
+      case Nil => a2
+      case Cons(x, xs) => Cons(x, append(xs, a2))
+    }
   }
 
 }
