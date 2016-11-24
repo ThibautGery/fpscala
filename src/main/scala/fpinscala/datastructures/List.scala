@@ -66,5 +66,16 @@ object List {
   def sum2(ns: List[Int]) = foldRight(ns, 0)((x,y) => x + y)
   def product2(ns: List[Double]) = foldRight(ns, 1.0)(_ * _)
 
+  def sum3(ns: List[Int]) = foldRight(ns, 0)((x,y) => x + y)
+  def product3(ns: List[Double]) = foldRight(ns, 1.0)(_ * _)
+
   def length[A](as: List[A]): Int = foldRight(as, 0)((item, acc) => acc + 1)
+
+  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
+    def loop(ass: List[A], acc: B): B = ass match {
+      case Nil => acc
+      case Cons(x, xs) => loop(xs, f(acc, x))
+    }
+    loop(as, z)
+  }
 }
