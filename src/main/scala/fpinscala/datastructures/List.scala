@@ -53,4 +53,9 @@ object List {
     }
   }
 
+  def init[A](l: List[A]): List[A] = l match {
+    case Nil => Nil
+    case Cons(a, Nil) => Nil
+    case Cons(a, t) => Cons(a, init(t))
+  }
 }

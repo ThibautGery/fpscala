@@ -92,4 +92,18 @@ class ListTest extends Specification {
       List.append(List(1, 2), List(3, 4)) must_== List(1, 2, 3, 4)
     }
   }
+
+  "The init function" should {
+    "return Nil for an empty list" in {
+      List.init(Nil) must_== Nil
+    }
+
+    "return Nil for an list of one elem" in {
+      List.init(List(1)) must_== Nil
+    }
+
+    "return all the element but the last" in {
+      List.init(List(1, 2, 3, 4)) must_== List(1, 2, 3)
+    }
+  }
 }
