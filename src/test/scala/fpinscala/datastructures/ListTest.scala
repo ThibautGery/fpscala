@@ -133,4 +133,19 @@ class ListTest extends Specification {
     }
   }
 
+  "The reverse function" should {
+    "return Nil of the the list is Nil" in {
+      List.reverse(Nil) must_== Nil
+    }
+
+    "return the same list if the list is of size 1" in {
+      List.reverse(List(4)) must_== List(4)
+      List.reverse(List(34)) must_== List(34)
+    }
+
+    "return reverse the list" in {
+      List.reverse(List(1, 2, 3, 4, 5, 6)) must_== List(6, 5, 4, 3, 2, 1)
+    }
+  }
+
 }
