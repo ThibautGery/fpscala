@@ -112,4 +112,19 @@ class ListTest extends Specification {
       List.init(List(1, 2, 3, 4)) must_== List(1, 2, 3)
     }
   }
+
+  "The length" should {
+    "return 0  for an empty list" in {
+      List.length(List()) must_== 0
+    }
+
+    "return the 1 for list of one item" in {
+      List.length(List(12)) must_== 1
+    }
+
+    "return the length of the lit" in {
+      List.length(List(12,1, 45, 23)) must_== 4
+    }
+  }
+
 }
