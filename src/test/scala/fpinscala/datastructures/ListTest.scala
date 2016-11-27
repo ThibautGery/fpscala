@@ -170,4 +170,11 @@ class ListTest extends Specification {
     }
   }
 
+  "The double to String function" should {
+    "convert the double to string" in {
+      List.doubleToString(Nil) must_== Nil
+      List.doubleToString(List(1, 2, 3)) must_== List("1.0", "2.0", "3.0")
+    }
+  }
+
 }
