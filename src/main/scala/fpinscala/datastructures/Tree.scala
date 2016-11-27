@@ -6,32 +6,18 @@ case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 
 
 object Tree {
-  def max(t: Tree[Int]): Int = {
-    def max(t1: Tree[Int], t2: Tree[Int]): Int = (t1, t2) match {
-      case (Leaf(v1), Leaf(v2)) => v1.max(v2)
-      case (Branch(l, r), Leaf(v)) => max(l,r).max(v)
-      case (Leaf(v), Branch(l, r)) => max(l,r).max(v)
-      case (Branch(l1, r1), Branch(l2, r2)) => max(l1, r1).max(max(l2, r2))
-    }
+  def max(t: Tree[Int]): Int = fold[Int, Int](t)((l,r) => l.max(r), v => v)
 
-    t match {
-      case Leaf(v) => v
-      case Branch(t1, t2) => max(t1, t2)
-    }
-  }
 
-  def size[A](t: Tree[A]) : Int = t match {
-    case Branch(t1, t2) => size(t1) + size(t2) + 1
-    case Leaf(_) => 1
-  }
 
-  def depth[A](t: Tree[A]) : Int = t match {
-    case Branch(t1, t2) => depth(t1).max(depth(t2)) + 1
-    case Leaf(_) => 1
-  }
+  def size[A](t: Tree[A]) : Int = fold[A, Int](t)((l, r) => l + r + 1, _ => 1)
 
-  def map[A, B](t: Tree[A])(f: A => B) : Tree[B] = t match {
-    case Branch(t1, t2) => Branch(map(t1)(f),map(t2)(f) )
-    case Leaf(v) => Leaf(f(v))
+  def depth[A](t: Tree[A]) : Int = fold[A, Int](t)((l, r) => l.max(r) + 1, _ => 1)
+
+  def map[A, B](t: Tree[A])(f: A => B) : Tree[B] = fold[A, Tree[B]](t)((l, r) => Branch[B](l, r), v => Leaf(f(v)))
+
+  def fold[A, B](t: Tree[A])(f: (B, B) => B, g: A => B): B = t match {
+    case Branch(l, r) => f(fold(l)(f, g), fold(r)(f, g))
+    case Leaf(v) => g(v)
   }
 }
