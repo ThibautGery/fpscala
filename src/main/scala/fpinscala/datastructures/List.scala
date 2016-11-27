@@ -91,4 +91,16 @@ object List {
     foldRight[A, List[B]](as, Nil)((x, acc) => {
       List.append(f(x), acc)
     })
+
+  def addTwoList(a1: List[Int], a2: List[Int]): List[Int] = {
+    @tailrec
+    def loop(a1: List[Int], a2: List[Int], acc: List[Int]): List[Int] = {
+      (a1, a2) match {
+        case (Nil, _) => acc
+        case (_, Nil) => acc
+        case (Cons(x, xs), Cons(y, ys)) => loop(xs, ys, Cons(x + y, acc))
+      }
+    }
+    List.reverse(loop(a1, a2, Nil))
+  }
 }

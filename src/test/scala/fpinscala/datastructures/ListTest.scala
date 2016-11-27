@@ -198,4 +198,20 @@ class ListTest extends Specification {
     }
   }
 
+  "The addTwoList method" should {
+    "return Nil if the second is empty" in {
+      List.addTwoList(List(1, 2, 3), Nil) must_== Nil
+    }
+
+    "return Nil if the first is empty" in {
+      List.addTwoList(Nil, List(1, 2, 3)) must_== Nil
+    }
+
+    "add each other element in the list" in {
+      List.addTwoList(List(4, 5, 6), List(1, 2, 3)) must_== List(5, 7, 9)
+      List.addTwoList(List(4, 5, 6), List(1, 2, 3, 4)) must_== List(5, 7, 9)
+      List.addTwoList(List(4, 5, 6, 7), List(1, 2, 3)) must_== List(5, 7, 9)
+    }
+  }
+
 }
