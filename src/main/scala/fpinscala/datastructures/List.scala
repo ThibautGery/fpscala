@@ -78,14 +78,9 @@ object List {
 
   def flatten[A](ll: List[List[A]]): List[A] = foldLeft[List[A], List[A]](ll, Nil)((acc, x) => append(acc, x))
 
-  def addOne(l: List[Int]): List[Int] = l match {
-    case Nil => Nil
-    case Cons(x, xs) => Cons(x + 1, addOne(xs))
-  }
+  def addOne(l: List[Int]): List[Int] = map(l)(a => a + 1 )
 
-  def doubleToString(l: List[Double]): List[String] = l match {
-    case Nil => Nil
-    case Cons(x, xs) => Cons(x.toString, doubleToString(xs))
-  }
+  def doubleToString(l: List[Double]): List[String] = map(l)(a => a.toString)
 
+  def map[A,B](as: List[A])(f: A => B): List[B] = foldRight[A, List[B]](as, Nil)((x, acc) => Cons(f(x), acc))
 }
