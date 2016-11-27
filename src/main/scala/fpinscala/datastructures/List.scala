@@ -46,12 +46,7 @@ object List {
     else drop(tail(l), n - 1)
   }
 
-  def append[A](a1: List[A], a2: List[A]): List[A] = {
-    a1 match {
-      case Nil => a2
-      case Cons(x, xs) => Cons(x, append(xs, a2))
-    }
-  }
+  def append[A](a1: List[A], a2: List[A]): List[A] = foldRight(a1, a2)((x, acc) => Cons(x, acc))
 
   def init[A](l: List[A]): List[A] = l match {
     case Nil => Nil
