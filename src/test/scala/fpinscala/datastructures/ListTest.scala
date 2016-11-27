@@ -148,4 +148,19 @@ class ListTest extends Specification {
     }
   }
 
+  "The flatten function" should {
+
+    "return the Nil if empty" in {
+      List.flatten(Nil) must_== Nil
+    }
+
+    "return the first element if one elem" in {
+      List.flatten(List(List(1, 2, 3))) must_== List(1, 2, 3)
+    }
+
+    "return a flatten list" in {
+      List.flatten(List(List(1, 2, 3), List(4, 5, 6))) must_== List(1, 2, 3, 4 , 5, 6)
+    }
+  }
+
 }
