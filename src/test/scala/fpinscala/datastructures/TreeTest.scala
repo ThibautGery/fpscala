@@ -47,8 +47,24 @@ class TreeTest extends Specification {
       Tree.depth(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4)))) must_== 3
       Tree.depth(Branch(Branch(Leaf(1), Leaf(2)), Leaf(4))) must_== 3
       Tree.depth(Branch(Leaf(2), Branch(Leaf(3), Leaf(4)))) must_== 3
-      Tree.depth(Branch(Leaf(2), Branch(Leaf(3), Leaf(4)))) must_== 3
       Tree.depth(Branch(Leaf(2), Branch(Leaf(3), Branch(Leaf(4), Leaf(5))))) must_== 4
+    }
+  }
+
+  "The map function" should {
+    "return the value transformed for an leaf" in {
+      Tree.map(Leaf("sdsd"))(_.size) must_== Leaf(4)
+    }
+
+    "return the value transformed for 2 for a branch and 2 leaves" in {
+      Tree.map(Branch(Leaf("a"), Leaf("aa")))(_.size) must_== Branch(Leaf(1), Leaf(2))
+    }
+
+    "return the value transformed" in {
+      Tree.map(Branch(Branch(Leaf("a"), Leaf("aa")), Branch(Leaf("aaa"), Leaf("aaaa"))))(_.size) must_== Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4)))
+      Tree.map(Branch(Branch(Leaf("a"), Leaf("aa")), Leaf("aaaa")))(_.size) must_== Branch(Branch(Leaf(1), Leaf(2)), Leaf(4))
+      Tree.map(Branch(Leaf("aa"), Branch(Leaf("aaa"), Leaf("aaaa"))))(_.size) must_== Branch(Leaf(2), Branch(Leaf(3), Leaf(4)))
+
     }
   }
 }
