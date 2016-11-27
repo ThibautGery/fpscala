@@ -92,13 +92,15 @@ object List {
       List.append(f(x), acc)
     })
 
-  def addTwoList(a1: List[Int], a2: List[Int]): List[Int] = {
+  def addTwoList(a1: List[Int], a2: List[Int]): List[Int] = zipWith(a1, a2)(_ + _)
+
+  def zipWith[A, B, C](a1: List[A], a2: List[B])(f: (A, B) => C): List[C] = {
     @tailrec
-    def loop(a1: List[Int], a2: List[Int], acc: List[Int]): List[Int] = {
+    def loop(a1: List[A], a2: List[B], acc: List[C]): List[C] = {
       (a1, a2) match {
         case (Nil, _) => acc
         case (_, Nil) => acc
-        case (Cons(x, xs), Cons(y, ys)) => loop(xs, ys, Cons(x + y, acc))
+        case (Cons(x, xs), Cons(y, ys)) => loop(xs, ys, Cons(f(x, y), acc))
       }
     }
     List.reverse(loop(a1, a2, Nil))
