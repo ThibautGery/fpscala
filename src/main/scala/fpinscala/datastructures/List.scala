@@ -77,4 +77,10 @@ object List {
   def foldRight[A,B](as: List[A], z: B)(f: (A, B) => B): B = foldLeft(reverse(as), z)((b,a) => f(a,b))
 
   def flatten[A](ll: List[List[A]]): List[A] = foldLeft[List[A], List[A]](ll, Nil)((acc, x) => append(acc, x))
+
+  def addOne(l: List[Int]): List[Int] = l match {
+    case Nil => Nil
+    case Cons(x, xs) => Cons(x + 1, addOne(xs))
+  }
+
 }

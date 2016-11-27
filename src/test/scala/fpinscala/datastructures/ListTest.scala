@@ -163,4 +163,11 @@ class ListTest extends Specification {
     }
   }
 
+  "The add One function" should {
+    "add one" in {
+      List.addOne(Nil) must_== Nil
+      List.addOne(List(1, 2, 3)) must_== List(2, 3, 4)
+    }
+  }
+
 }
