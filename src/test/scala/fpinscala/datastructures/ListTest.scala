@@ -177,4 +177,14 @@ class ListTest extends Specification {
     }
   }
 
+  "The filter function" should {
+    "return all the list when the condition is always true" in {
+      List.filter(List(1, 2, 3, 4))(x => true) must_== List(1, 2, 3, 4)
+    }
+
+    "filter the elem given the predicate" in {
+      List.filter(List(1, 2, 3, 4))(_ % 2 == 0) must_== List(2, 4)
+    }
+  }
+
 }

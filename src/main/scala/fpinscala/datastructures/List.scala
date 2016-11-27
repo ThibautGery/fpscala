@@ -83,4 +83,9 @@ object List {
   def doubleToString(l: List[Double]): List[String] = map(l)(a => a.toString)
 
   def map[A,B](as: List[A])(f: A => B): List[B] = foldRight[A, List[B]](as, Nil)((x, acc) => Cons(f(x), acc))
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = foldRight[A, List[A]](as, Nil)((x, acc) => {
+    if(f(x)) Cons(x, acc)
+    else acc
+  })
 }
