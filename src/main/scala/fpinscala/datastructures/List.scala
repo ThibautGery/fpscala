@@ -105,4 +105,17 @@ object List {
     }
     List.reverse(loop(a1, a2, Nil))
   }
+
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+    var latestCheck = Nil
+    def loop (sup2: List[A], sub2: List[A]): Boolean = (sup2, sub2) match {
+      case (_, Nil) => true
+      case (Nil, _) => false
+      case (Cons(x, xs), Cons(y, ys)) if x == y => loop(xs, ys)
+      case (Cons(x, xs), _) => loop(xs, sub)
+      
+    }
+    loop(sup, sub)
+  }
+
 }

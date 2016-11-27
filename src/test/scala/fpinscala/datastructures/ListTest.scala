@@ -214,4 +214,21 @@ class ListTest extends Specification {
     }
   }
 
+  "The hasSubsequence function" should {
+    "return false when they is no subsequence" in {
+      List.hasSubsequence(List(1, 2, 3), List(4, 5)) must_== false
+      List.hasSubsequence(List(1, 2, 4, 3, 6), List(1, 3)) must_== false
+    }
+
+    "return true when the subsequence equal the list" in {
+      List.hasSubsequence(List(1, 2, 3), List(1, 2, 3)) must_== true
+    }
+
+    "return true when there is the subsequence is the list" in {
+      List.hasSubsequence(List(1, 2, 3), List(3)) must_== true
+      List.hasSubsequence(List(1, 2, 3), List(2, 3)) must_== true
+      List.hasSubsequence(List(1, 2, 3, 4, 2, 3, 4), List(2, 3, 4)) must_== true
+    }
+  }
+
 }
