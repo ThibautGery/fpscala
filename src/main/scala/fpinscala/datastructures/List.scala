@@ -113,7 +113,7 @@ object List {
       case (Nil, _) => false
       case (Cons(x, xs), Cons(y, ys)) if x == y => loop(xs, ys)
       case (Cons(x, xs), _) => loop(xs, sub)
-      
+
     }
     loop(sup, sub)
   }
