@@ -88,4 +88,9 @@ object List {
     if(f(x)) Cons(x, acc)
     else acc
   })
+
+  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] =
+    foldRight[A, List[B]](as, Nil)((x, acc) => {
+      List.append(f(x), acc)
+    })
 }

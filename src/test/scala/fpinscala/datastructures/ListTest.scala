@@ -187,4 +187,15 @@ class ListTest extends Specification {
     }
   }
 
+  "The flatmap function" should {
+    "return Nil when Nil" in {
+      List.flatMap(Nil)(i => List(i,i)) must_== Nil
+    }
+
+    "flatmap the shit of out of the list" in {
+      List.flatMap(List(1,2,3))(i => List(i,i)) must_== List(1,1,2,2,3,3)
+      List.flatMap(List(1,2,3))(i => List(i, i +1)) must_== List(1,2,2,3,3,4)
+    }
+  }
+
 }
