@@ -20,6 +20,11 @@ sealed trait Option[+A] {
     case Some(v) => Some(v)
     case None => ob
   }
+
+  def filter(f: A => Boolean): Option[A] = this match {
+    case Some(v) if f(v) => Some(v)
+    case _ => None
+  }
 }
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
