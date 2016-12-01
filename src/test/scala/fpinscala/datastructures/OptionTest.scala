@@ -28,4 +28,15 @@ class OptionTest extends Specification {
     }
   }
 
+  "The getOrElse function" should {
+    "return the default value for None" in {
+      val option:Option[Int] = None
+      option.getOrElse(4) must_== 4
+    }
+
+    "return None for None" in {
+      Some(2).getOrElse(4) must_== 2
+    }
+  }
+
 }
