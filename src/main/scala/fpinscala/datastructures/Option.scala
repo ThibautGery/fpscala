@@ -15,6 +15,11 @@ sealed trait Option[+A] {
     case Some(v) => v
     case None => default
   }
+
+  def orElse[B >: A](ob: => Option[B]): Option[B] = this match {
+    case Some(v) => Some(v)
+    case None => ob
+  }
 }
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
