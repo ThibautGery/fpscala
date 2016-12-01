@@ -66,4 +66,24 @@ class OptionTest extends Specification {
     }
   }
 
+  "The map2 function" should {
+    "return the None for if the first option is none" in {
+      val o1:Option[Int] = None
+      val o2:Option[String] = Some("toto")
+      Option.map2(o1, o2)((a, b) => a + b.length) must_== None
+    }
+
+    "return the None for if the second option is none" in {
+      val o1:Option[Int] = Some(3)
+      val o2:Option[String] = None
+      Option.map2(o1, o2)((a, b) => a + b.length) must_== None
+    }
+
+    "return Some for is both option are defined" in {
+      val o1:Option[Int] = Some(3)
+      val o2:Option[String] = Some("toto")
+      Option.map2(o1, o2)((a, b) => a + b.length) must_== Some(7)
+    }
+  }
+
 }
