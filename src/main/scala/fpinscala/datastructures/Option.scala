@@ -1,5 +1,7 @@
 package fpinscala.datastructures
 
+import scala.annotation.tailrec
+
 sealed trait Option[+A] {
   def map[B](f: A => B): Option[B] = this match {
     case Some(v) => Some(f(v))
@@ -38,5 +40,15 @@ object Option {
     case (None, _) => None
     case (_, None) => None
     case (Some(a), Some(b)) => Some(f(a, b))
+  }
+
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = {
+    @tailrec
+    def loop(a: List[Option[A]], acc: Option[List[A]]) : Option[List[A]] = (a, acc) match {
+      case (Nil, _) => acc
+      case (Cons(None, xs), _) => None
+      case (Cons(Some(v), xs), _) => loop(xs, acc.map(Cons(v, _)))
+    }
+    loop(a, Some(Nil)).map(List.reverse)
   }
 }

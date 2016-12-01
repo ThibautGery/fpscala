@@ -86,4 +86,16 @@ class OptionTest extends Specification {
     }
   }
 
+  "The sequence function" should {
+    "return the None for if there is a None" in {
+      val options = List(Some(3), None, Some(5))
+      Option.sequence(options) must_== None
+    }
+
+    "return the Some of the list if only Some" in {
+      val options = List(Some(3), Some(4), Some(5))
+      Option.sequence(options) must_== Some(List(3, 4, 5))
+    }
+  }
+
 }
