@@ -51,4 +51,12 @@ object Option {
     }
     loop(a, Some(Nil)).map(List.reverse)
   }
+
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
+    List.foldRight[A, Option[List[B]]](a, Some(Nil))((item, accOpt) => {
+      for {
+        v <- f(item)
+        acc <- accOpt
+      } yield Cons(v, acc)
+  })
 }

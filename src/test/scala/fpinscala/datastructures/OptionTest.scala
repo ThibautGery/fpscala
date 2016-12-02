@@ -98,4 +98,16 @@ class OptionTest extends Specification {
     }
   }
 
+  "The traver function" should {
+    "return the None for if there is a None" in {
+      val input = List(1, 2, 0)
+      Option.traverse(input)(i => if(i > 0) Some(i) else None) must_== None
+    }
+
+    "return the Some of the list if only Some" in {
+      val input = List(1, 2, 3)
+      Option.traverse(input)(i => if(i > 0) Some(i) else None) must_== Some(List(1, 2, 3))
+    }
+  }
+
 }
