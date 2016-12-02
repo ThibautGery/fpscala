@@ -41,4 +41,24 @@ class EitherTest extends Specification {
       either.orElse(Left("ata")) must_==  Right(4)
     }
   }
+
+  "The map2 function" should {
+    "return the Left for if the first either is Left" in {
+      val e1:Either[String, Int] = Left("tata")
+      val e2:Either[String, String] = Right("toto")
+      e1.map2(e2)((a, b) => a + b.length) must_== Left("tata")
+    }
+
+    "return the Left for if the second either is Left" in {
+      val e1:Either[String, Int] = Right(4)
+      val e2:Either[String, String] = Left("tata")
+      e1.map2(e2)((a, b) => a + b.length) must_== Left("tata")
+    }
+
+    "return Right for is both either are right" in {
+      val e1:Either[String, Int] = Right(4)
+      val e2:Either[String, String] = Right("toto")
+      e1.map2(e2)((a, b) => a + b.length) must_== Right(8)
+    }
+  }
 }
