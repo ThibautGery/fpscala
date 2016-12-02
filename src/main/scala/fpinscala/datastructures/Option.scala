@@ -42,15 +42,7 @@ object Option {
     case (Some(a), Some(b)) => Some(f(a, b))
   }
 
-  def sequence[A](a: List[Option[A]]): Option[List[A]] = {
-    @tailrec
-    def loop(a: List[Option[A]], acc: Option[List[A]]) : Option[List[A]] = (a, acc) match {
-      case (Nil, _) => acc
-      case (Cons(None, xs), _) => None
-      case (Cons(Some(v), xs), _) => loop(xs, acc.map(Cons(v, _)))
-    }
-    loop(a, Some(Nil)).map(List.reverse)
-  }
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = traverse[Option[A], A](a)(i => i)
 
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
     List.foldRight[A, Option[List[B]]](a, Some(Nil))((item, accOpt) => {
