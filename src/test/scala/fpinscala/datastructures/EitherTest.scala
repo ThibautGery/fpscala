@@ -61,4 +61,15 @@ class EitherTest extends Specification {
       e1.map2(e2)((a, b) => a + b.length) must_== Right(8)
     }
   }
+
+  "The try function" should {
+    "return Right if not exception are thrown" in {
+      Either.Try(1) must_== Right(1)
+    }
+
+    "return Left if an exeception is thrown" in {
+      val e = new Exception("toto")
+      Either.Try(throw e) must_== Left(e)
+    }
+  }
 }
