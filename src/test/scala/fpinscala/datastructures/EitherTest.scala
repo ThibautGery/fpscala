@@ -72,4 +72,28 @@ class EitherTest extends Specification {
       Either.Try(throw e) must_== Left(e)
     }
   }
+
+  "The sequence function" should {
+    "return the Left for if there is a Left" in {
+      val eithers = List(Right(3), Left("ërror"), Right(5))
+      Either.sequence(eithers) must_== Left("ërror")
+    }
+
+    "return the Right of the list if only Right" in {
+      val eithers = List(Right(3), Right(4), Right(5))
+      Either.sequence(eithers) must_== Right(List(3, 4, 5))
+    }
+  }
+
+  "The traverse function" should {
+    "return the Left for if there is a Left" in {
+      val input = List(1, 2, 0)
+      Either.traverse(input)(i => if(i > 0) Right(i) else Left("none positive")) must_== Left("none positive")
+    }
+
+    "return the Right of the list if only Right" in {
+      val input = List(1, 2, 3)
+      Either.traverse(input)(i => if(i > 0) Right(i) else Left("none positive")) must_== Right(List(1, 2, 3))
+    }
+  }
 }
