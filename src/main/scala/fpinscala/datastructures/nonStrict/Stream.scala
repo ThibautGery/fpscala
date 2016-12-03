@@ -20,6 +20,12 @@ sealed trait Stream[+A] {
     case (Cons(x, xs), i) => Stream.cons(x(), xs().take(i - 1))
   }
 
+  def takeWhile[B >: A](f: B => Boolean): Stream[B] = this match {
+    case Cons(x, xs) if f(x()) => Stream.cons(x(), xs().takeWhile(f))
+    case _ => Stream.empty
+  }
+
+
   def toList[B >: A]: List[B] = {
     @tailrec
     def loop(s: Stream[B], acc: List[B]):List[B] = s match {

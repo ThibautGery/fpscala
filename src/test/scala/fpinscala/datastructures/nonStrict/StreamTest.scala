@@ -41,6 +41,20 @@ class StreamTest extends Specification {
     }
   }
 
+  "takeWhile function" should {
+    "return the empty stream if dropping more elem than the list" in {
+      Stream(1, 2, 3, 4).takeWhile(i => false) must_== Empty
+    }
+
+    "return the stream if dropping none" in {
+      Stream(1, 2, 3, 4).takeWhile(i => true).toList must_== List(1, 2, 3, 4)
+    }
+
+    "return the stream without the first item" in {
+      Stream(1, 2, 3, 4).takeWhile(i => i <= 2).toList must_== List(1, 2)
+    }
+  }
+
   "take function" should {
     "return the empty stream if taking none" in {
       Stream(1, 2, 3, 4).take(0) must_== Empty
