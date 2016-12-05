@@ -7,6 +7,8 @@ import org.specs2.mutable.Specification
   */
 class StreamTest extends Specification {
 
+  def ones():Stream[Int] = Stream.cons(1, ones())
+
   "toList function" should {
     "convert the stream to list" in {
       Stream(1, 2, 3, 4).toList must_== List(1, 2, 3, 4)
@@ -77,6 +79,10 @@ class StreamTest extends Specification {
     "return true if the element is present" in {
       Stream(1, 2, 3, 4).exists(x => x < 4) must_== true
     }
+
+    "be lazy" in {
+      ones.exists(_ % 2 != 0) must_== true
+    }
   }
 
 
@@ -88,15 +94,23 @@ class StreamTest extends Specification {
     "return true if the element is present" in {
       Stream(1, 2, 3, 4).forAll(x => x < 5) must_== true
     }
+
+    "be lazy" in {
+      ones.forAll( _ != 1) must_== false
+    }
   }
 
   "the headOption function" should {
-    "return None if no eleemt" in {
+    "return None if no element" in {
       Stream.empty.headOption must_== None
     }
 
     "return Some if the stream is not empty" in {
       Stream(1, 2, 3, 4).headOption must_== Some(1)
+    }
+
+    "be lazy" in {
+      ones.headOption must_== Some(1)
     }
   }
 
@@ -108,6 +122,10 @@ class StreamTest extends Specification {
     "return the mapped element if the stream is not empty" in {
       Stream(1, 2, 3, 4).map( _ + 1).toList must_== List(2, 3, 4, 5)
     }
+
+    "be lazy" in {
+      ones.map( _ + 1).take(5).toList must_== List(2, 2, 2, 2, 2)
+    }
   }
 
   "the filter function" should {
@@ -117,6 +135,10 @@ class StreamTest extends Specification {
 
     "return the matching element if the stream is not empty" in {
       Stream(1, 2, 3, 4).filter( i =>  i % 2 == 0).toList must_== List(2, 4)
+    }
+
+    "be lazy" in {
+      ones.filter(_ => true).take(5).toList must_== List(1, 1, 1, 1, 1)
     }
   }
 
@@ -136,6 +158,10 @@ class StreamTest extends Specification {
     "return the concatenated stream" in {
       Stream(1, 2, 3, 4).append(Stream(5, 6, 7, 8)).toList must_== List(1, 2, 3, 4, 5, 6, 7, 8)
     }
+
+    "be lazy" in {
+      ones.map(_ + 2).append(ones).take(5).toList must_== List(3, 3, 3, 3, 3)
+    }
   }
 
   "the flatmap function" should {
@@ -146,5 +172,9 @@ class StreamTest extends Specification {
     "return the mapped element if the stream is not empty" in {
       Stream(1, 2, 3, 4).flatmap(i =>  Stream(i, i)) .toList must_== List(1, 1, 2, 2, 3, 3, 4, 4)
     }
+
+//    "be lazy" in {
+//      ones.flatmap(i =>  Stream(i + 1, i + 1)).take(5).toList must_== List(2, 2, 2, 2, 2)
+//    }
   }
 }
