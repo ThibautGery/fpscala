@@ -101,7 +101,7 @@ class StreamTest extends Specification {
   }
 
   "the map function" should {
-    "return Empty if no eleemt" in {
+    "return Empty if no element" in {
       Stream.empty[Int].map( _ + 1) must_== Empty
     }
 
@@ -111,12 +111,30 @@ class StreamTest extends Specification {
   }
 
   "the filter function" should {
-    "return Empty if no eleemt" in {
+    "return Empty if no element" in {
       Stream.empty[Int].filter( i => true) must_== Empty
     }
 
-    "return the mapped element if the stream is not empty" in {
+    "return the matching element if the stream is not empty" in {
       Stream(1, 2, 3, 4).filter( i =>  i % 2 == 0).toList must_== List(2, 4)
+    }
+  }
+
+  "the append function" should {
+    "return Empty if both stream are empty" in {
+      Stream.empty[Int].append(Stream.empty[Int]) must_== Empty
+    }
+
+    "return the first stream  if the second one is empty" in {
+      Stream(1, 2, 3, 4).append(Stream.empty[Int]).toList must_== List(1, 2, 3, 4)
+    }
+
+    "return the second stream  if the first one is empty" in {
+      Stream.empty[Int].append(Stream(1, 2, 3, 4)).toList must_== List(1, 2, 3, 4)
+    }
+
+    "return the concatenated stream" in {
+      Stream(1, 2, 3, 4).append(Stream(5, 6, 7, 8)).toList must_== List(1, 2, 3, 4, 5, 6, 7, 8)
     }
   }
 }
