@@ -101,12 +101,22 @@ class StreamTest extends Specification {
   }
 
   "the map function" should {
-    "return None if no eleemt" in {
+    "return Empty if no eleemt" in {
       Stream.empty[Int].map( _ + 1) must_== Empty
     }
 
-    "return Some if the stream is not empty" in {
+    "return the mapped element if the stream is not empty" in {
       Stream(1, 2, 3, 4).map( _ + 1).toList must_== List(2, 3, 4, 5)
+    }
+  }
+
+  "the filter function" should {
+    "return Empty if no eleemt" in {
+      Stream.empty[Int].filter( i => true) must_== Empty
+    }
+
+    "return the mapped element if the stream is not empty" in {
+      Stream(1, 2, 3, 4).filter( i =>  i % 2 == 0).toList must_== List(2, 4)
     }
   }
 }

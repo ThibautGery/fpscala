@@ -45,6 +45,9 @@ sealed trait Stream[+A] {
   }
 
   def map[B](f: A => B): Stream[B] = this.foldRight(Stream.empty[B])((i, acc) => Stream.cons(f(i), acc))
+
+  def filter(f: A => Boolean): Stream[A] = this.foldRight(Stream.empty[A])((i, acc) => if(f(i)) Stream.cons(i, acc) else acc)
+
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
