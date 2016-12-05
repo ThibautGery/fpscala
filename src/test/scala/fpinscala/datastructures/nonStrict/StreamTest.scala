@@ -137,4 +137,14 @@ class StreamTest extends Specification {
       Stream(1, 2, 3, 4).append(Stream(5, 6, 7, 8)).toList must_== List(1, 2, 3, 4, 5, 6, 7, 8)
     }
   }
+
+  "the flatmap function" should {
+    "return Empty if no element" in {
+      Stream.empty[Int].flatmap(i =>  Stream(i, i)) must_== Empty
+    }
+
+    "return the mapped element if the stream is not empty" in {
+      Stream(1, 2, 3, 4).flatmap(i =>  Stream(i, i)) .toList must_== List(1, 1, 2, 2, 3, 3, 4, 4)
+    }
+  }
 }
