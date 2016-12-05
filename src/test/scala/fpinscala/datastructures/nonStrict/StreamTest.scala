@@ -50,7 +50,7 @@ class StreamTest extends Specification {
       Stream(1, 2, 3, 4).takeWhile(i => true).toList must_== List(1, 2, 3, 4)
     }
 
-    "return the stream without the first item" in {
+    "return the stream with only the first items" in {
       Stream(1, 2, 3, 4).takeWhile(i => i <= 2).toList must_== List(1, 2)
     }
   }

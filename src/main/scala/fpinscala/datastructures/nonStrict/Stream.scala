@@ -20,10 +20,9 @@ sealed trait Stream[+A] {
     case (Cons(x, xs), i) => Stream.cons(x(), xs().take(i - 1))
   }
 
-  def takeWhile[B >: A](f: B => Boolean): Stream[B] = this match {
-    case Cons(x, xs) if f(x()) => Stream.cons(x(), xs().takeWhile(f))
-    case _ => Stream.empty
-  }
+  def takeWhile[B >: A](f: B => Boolean): Stream[B] = foldRight(Stream.empty[B])((i, acc) => {
+    if(f(i)) Stream.cons(i, acc) else Stream.empty[B]
+  })
 
   def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
     case Cons(h, t) => f(h(), t().foldRight(z)(f))
