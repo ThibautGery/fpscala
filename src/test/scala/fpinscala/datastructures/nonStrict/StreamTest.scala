@@ -89,4 +89,14 @@ class StreamTest extends Specification {
       Stream(1, 2, 3, 4).forAll(x => x < 5) must_== true
     }
   }
+
+  "the headOption function" should {
+    "return None if no eleemt" in {
+      Stream.empty.headOption must_== None
+    }
+
+    "return Some if the stream is not empty" in {
+      Stream(1, 2, 3, 4).headOption must_== Some(1)
+    }
+  }
 }

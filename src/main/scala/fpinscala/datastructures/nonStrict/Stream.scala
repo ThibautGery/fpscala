@@ -29,6 +29,8 @@ sealed trait Stream[+A] {
     case _ => z
   }
 
+  def headOption: Option[A] = foldRight[Option[A]](None)((i, _) => Some(i))
+
   def exists(p: A => Boolean): Boolean = foldRight(false)((i, acc) => p(i) || acc)
 
   def forAll(p: A => Boolean): Boolean = foldRight(true)((i, acc) => p(i) && acc)
