@@ -25,6 +25,12 @@ sealed trait Stream[+A] {
     case _ => Stream.empty
   }
 
+  def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
+    case Cons(h, t) => f(h(), t().foldRight(z)(f))
+    case _ => z
+  }
+
+  def exists(p: A => Boolean): Boolean = foldRight(false)((a, b) => p(a) || b)
 
   def toList[B >: A]: List[B] = {
     @tailrec

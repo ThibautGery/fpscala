@@ -68,4 +68,14 @@ class StreamTest extends Specification {
       Stream(1, 2, 3, 4).take(2).toList must_== List(1, 2)
     }
   }
+
+  "take function" should {
+    "return false if the element is not present" in {
+      Stream(1, 2, 3, 4).exists(x => x > 4 ) must_== false
+    }
+
+    "return true if the element is present" in {
+      Stream(1, 2, 3, 4).exists(x => x < 4) must_== true
+    }
+  }
 }
