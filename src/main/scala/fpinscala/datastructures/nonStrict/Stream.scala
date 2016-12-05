@@ -30,7 +30,9 @@ sealed trait Stream[+A] {
     case _ => z
   }
 
-  def exists(p: A => Boolean): Boolean = foldRight(false)((a, b) => p(a) || b)
+  def exists(p: A => Boolean): Boolean = foldRight(false)((i, acc) => p(i) || acc)
+
+  def forAll(p: A => Boolean): Boolean = foldRight(true)((i, acc) => p(i) && acc)
 
   def toList[B >: A]: List[B] = {
     @tailrec

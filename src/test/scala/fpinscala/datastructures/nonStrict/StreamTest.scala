@@ -69,13 +69,24 @@ class StreamTest extends Specification {
     }
   }
 
-  "take function" should {
+  "the exists function" should {
     "return false if the element is not present" in {
       Stream(1, 2, 3, 4).exists(x => x > 4 ) must_== false
     }
 
     "return true if the element is present" in {
       Stream(1, 2, 3, 4).exists(x => x < 4) must_== true
+    }
+  }
+
+
+  "the forAll function" should {
+    "return false if the function is not always true" in {
+      Stream(1, 2, 3, 4).forAll(x => x > 2 ) must_== false
+    }
+
+    "return true if the element is present" in {
+      Stream(1, 2, 3, 4).forAll(x => x < 5) must_== true
     }
   }
 }
