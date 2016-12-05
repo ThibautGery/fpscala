@@ -99,4 +99,14 @@ class StreamTest extends Specification {
       Stream(1, 2, 3, 4).headOption must_== Some(1)
     }
   }
+
+  "the map function" should {
+    "return None if no eleemt" in {
+      Stream.empty[Int].map( _ + 1) must_== Empty
+    }
+
+    "return Some if the stream is not empty" in {
+      Stream(1, 2, 3, 4).map( _ + 1).toList must_== List(2, 3, 4, 5)
+    }
+  }
 }

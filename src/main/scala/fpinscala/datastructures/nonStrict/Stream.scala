@@ -43,6 +43,8 @@ sealed trait Stream[+A] {
     }
     loop(this, Nil).reverse
   }
+
+  def map[B](f: A => B): Stream[B] = this.foldRight(Stream.empty[B])((i, acc) => Stream.cons(f(i), acc))
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
