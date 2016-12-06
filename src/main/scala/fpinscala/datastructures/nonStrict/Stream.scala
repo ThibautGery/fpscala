@@ -76,5 +76,6 @@ object Stream {
 
   def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
 
+  def from[A](a: Int): Stream[Int] = Stream.cons(a, from(a + 1))
 
 }

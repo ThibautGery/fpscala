@@ -176,4 +176,10 @@ class StreamTest extends Specification {
       Stream(1, 2, 3, 4).flatMap(i =>  Stream.ones().map(_ + i)).take(5).toList must_== List(2, 2, 2, 2, 2)
     }
   }
+
+  "the from function" should {
+    "return the list of following integer" in {
+      Stream.from(45).take(4).toList must_== List(45, 46, 47, 48)
+    }
+  }
 }
