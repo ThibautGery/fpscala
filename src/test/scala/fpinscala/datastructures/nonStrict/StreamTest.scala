@@ -182,4 +182,10 @@ class StreamTest extends Specification {
       Stream.from(45).take(4).toList must_== List(45, 46, 47, 48)
     }
   }
+
+  "the fibs function" should {
+    "return the list of following integer" in {
+      Stream.fibs.take(6).toList must_== List(0, 1, 1, 2, 3, 5)
+    }
+  }
 }
