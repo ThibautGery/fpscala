@@ -20,6 +20,12 @@ sealed trait Stream[+A] {
     case (Cons(x, xs), i) => Stream.cons(x(), xs().take(i - 1))
   }
 
+  def takeAsUnfold[B >: A](n: Int): Stream[B] = Stream.unfold[B, (Stream[B], Int)]((this, n)) {
+    case (_, 0) => None
+    case (Empty, _) => None
+    case (Cons(h, t), i) => Some((h(), (t(), i - 1)))
+  }
+
   def takeWhile[B >: A](f: B => Boolean): Stream[B] = foldRight(Stream.empty[B])((i, acc) => {
     if(f(i)) Stream.cons(i, acc) else Stream.empty[B]
   })

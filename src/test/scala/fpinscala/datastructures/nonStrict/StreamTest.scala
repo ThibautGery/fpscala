@@ -59,14 +59,17 @@ class StreamTest extends Specification {
   "take function" should {
     "return the empty stream if taking none" in {
       Stream(1, 2, 3, 4).take(0) must_== Empty
+      Stream(1, 2, 3, 4).takeAsUnfold(0) must_== Empty
     }
 
     "return the the stream if taking more" in {
       Stream(1, 2, 3, 4).take(1000).toList must_== List(1, 2, 3, 4)
+      Stream(1, 2, 3, 4).takeAsUnfold(1000).toList must_== List(1, 2, 3, 4)
     }
 
     "return the stream without the last items" in {
       Stream(1, 2, 3, 4).take(2).toList must_== List(1, 2)
+      Stream(1, 2, 3, 4).takeAsUnfold(2).toList must_== List(1, 2)
     }
   }
 
