@@ -66,11 +66,15 @@ object Stream {
     lazy val tail = tl
     Cons(() => head, () => tail)
   }
+
   def empty[A]: Stream[A] = Empty
 
   def apply[A](as: A*): Stream[A] =
     if (as.isEmpty) empty else cons(as.head, apply(as.tail: _*))
 
-  def ones():Stream[Int] = Stream.cons(1, ones())
+  def ones(): Stream[Int] = constant(1)
+
+  def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
+
 
 }
