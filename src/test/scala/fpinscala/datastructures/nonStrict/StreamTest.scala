@@ -45,14 +45,17 @@ class StreamTest extends Specification {
   "takeWhile function" should {
     "return the empty stream if dropping more elem than the list" in {
       Stream(1, 2, 3, 4).takeWhile(i => false) must_== Empty
+      Stream(1, 2, 3, 4).takeWhileAsUnfold(i => false) must_== Empty
     }
 
     "return the stream if dropping none" in {
       Stream(1, 2, 3, 4).takeWhile(i => true).toList must_== List(1, 2, 3, 4)
+      Stream(1, 2, 3, 4).takeWhileAsUnfold(i => true).toList must_== List(1, 2, 3, 4)
     }
 
     "return the stream with only the first items" in {
       Stream(1, 2, 3, 4).takeWhile(i => i <= 2).toList must_== List(1, 2)
+      Stream(1, 2, 3, 4).takeWhileAsUnfold(i => i <= 2).toList must_== List(1, 2)
     }
   }
 

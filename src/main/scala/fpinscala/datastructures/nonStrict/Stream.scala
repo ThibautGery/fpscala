@@ -30,6 +30,11 @@ sealed trait Stream[+A] {
     if(f(i)) Stream.cons(i, acc) else Stream.empty[B]
   })
 
+  def takeWhileAsUnfold[B >: A](f: B => Boolean): Stream[B] = Stream.unfold[B, Stream[B]](this) {
+    case Cons(h, t) if f(h()) => Some((h(), t()))
+    case _ => None
+  }
+
   def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
     case Cons(h, t) => f(h(), t().foldRight(z)(f))
     case _ => z
