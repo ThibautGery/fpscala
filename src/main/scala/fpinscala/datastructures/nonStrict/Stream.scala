@@ -85,4 +85,14 @@ object Stream {
     loop(0, 1)
   }
 
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
+    def loop(i: S): Stream[A] = {
+      f(z) match {
+        case None => empty
+        case Some((value, acc)) => cons(value, loop(acc))
+      }
+    }
+    loop(z)
+  }
+
 }
