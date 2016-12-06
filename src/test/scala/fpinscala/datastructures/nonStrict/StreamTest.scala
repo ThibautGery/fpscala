@@ -116,14 +116,17 @@ class StreamTest extends Specification {
   "the map function" should {
     "return Empty if no element" in {
       Stream.empty[Int].map( _ + 1) must_== Empty
+      Stream.empty[Int].mapAsUnfold( _ + 1) must_== Empty
     }
 
     "return the mapped element if the stream is not empty" in {
       Stream(1, 2, 3, 4).map( _ + 1).toList must_== List(2, 3, 4, 5)
+      Stream(1, 2, 3, 4).mapAsUnfold( _ + 1).toList must_== List(2, 3, 4, 5)
     }
 
     "be lazy" in {
       Stream.ones.map( _ + 1).take(5).toList must_== List(2, 2, 2, 2, 2)
+      Stream.ones.mapAsUnfold( _ + 1).take(5).toList must_== List(2, 2, 2, 2, 2)
     }
   }
 
