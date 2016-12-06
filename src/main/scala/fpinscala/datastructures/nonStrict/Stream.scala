@@ -44,13 +44,16 @@ sealed trait Stream[+A] {
     loop(this, Nil).reverse
   }
 
-  def map[B](f: A => B): Stream[B] = this.foldRight(Stream.empty[B])((i, acc) => Stream.cons(f(i), acc))
+  def map[B](f: A => B): Stream[B] = foldRight(Stream.empty[B])((i, acc) => Stream.cons(f(i), acc))
 
-  def filter(f: A => Boolean): Stream[A] = this.foldRight(Stream.empty[A])((i, acc) => if(f(i)) Stream.cons(i, acc) else acc)
+  def filter(f: A => Boolean): Stream[A] = foldRight(Stream.empty[A]){ (i, acc) =>
+    if(f(i)) Stream.cons(i, acc)
+    else acc
+  }
 
-  def append[B >: A](s2: Stream[B]): Stream[B] = this.foldRight(s2)((i, acc) => Stream.cons(i, acc))
+  def append[B >: A](s2: Stream[B]): Stream[B] = foldRight(s2)((i, acc) => Stream.cons(i, acc))
 
-  def flatmap[B](f: A => Stream[B]): Stream[B] = this.foldRight(Stream.empty[B])((i, acc) => f(i).append(acc))
+  def flatMap[B](f: A => Stream[B]): Stream[B] = foldRight(Stream.empty[B])((i, acc) => f(i) append acc )
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
