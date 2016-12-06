@@ -7,7 +7,6 @@ import org.specs2.mutable.Specification
   */
 class StreamTest extends Specification {
 
-  def ones():Stream[Int] = Stream.cons(1, ones())
 
   "toList function" should {
     "convert the stream to list" in {
@@ -81,7 +80,7 @@ class StreamTest extends Specification {
     }
 
     "be lazy" in {
-      ones.exists(_ % 2 != 0) must_== true
+      Stream.ones.exists(_ % 2 != 0) must_== true
     }
   }
 
@@ -96,7 +95,7 @@ class StreamTest extends Specification {
     }
 
     "be lazy" in {
-      ones.forAll( _ != 1) must_== false
+      Stream.ones.forAll( _ != 1) must_== false
     }
   }
 
@@ -110,7 +109,7 @@ class StreamTest extends Specification {
     }
 
     "be lazy" in {
-      ones.headOption must_== Some(1)
+      Stream.ones.headOption must_== Some(1)
     }
   }
 
@@ -124,7 +123,7 @@ class StreamTest extends Specification {
     }
 
     "be lazy" in {
-      ones.map( _ + 1).take(5).toList must_== List(2, 2, 2, 2, 2)
+      Stream.ones.map( _ + 1).take(5).toList must_== List(2, 2, 2, 2, 2)
     }
   }
 
@@ -138,7 +137,7 @@ class StreamTest extends Specification {
     }
 
     "be lazy" in {
-      ones.filter(_ => true).take(5).toList must_== List(1, 1, 1, 1, 1)
+      Stream.ones.filter(_ => true).take(5).toList must_== List(1, 1, 1, 1, 1)
     }
   }
 
@@ -160,7 +159,7 @@ class StreamTest extends Specification {
     }
 
     "be lazy" in {
-      ones.map(_ + 2).append(ones).take(5).toList must_== List(3, 3, 3, 3, 3)
+      Stream.ones.map(_ + 2).append(Stream.ones).take(5).toList must_== List(3, 3, 3, 3, 3)
     }
   }
 
@@ -174,7 +173,7 @@ class StreamTest extends Specification {
     }
 
     "be lazy" in {
-      Stream(1, 2, 3, 4).flatMap(i =>  ones().map(_ + i)).take(5).toList must_== List(2, 2, 2, 2, 2)
+      Stream(1, 2, 3, 4).flatMap(i =>  Stream.ones().map(_ + i)).take(5).toList must_== List(2, 2, 2, 2, 2)
     }
   }
 }
