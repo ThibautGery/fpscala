@@ -91,6 +91,20 @@ sealed trait Stream[+A] {
     }
     if(s == Empty) false else loop(this, s)
   }
+
+  def tails2: Stream[Stream[A]] = Stream.unfold[Stream[A], Option[Stream[A]]](Some(this)) {
+    case None => None
+    case Some(v) => v match {
+      case Cons(h, t) => Some(Stream.cons(h(), t()), Some(t()))
+      case Empty => Some(Stream.empty, None)
+    }
+  }
+
+  def tails: Stream[Stream[A]] = Stream.unfold[Stream[A], Option[Stream[A]]](Some(this)) {
+    case None => None
+    case Some(Cons(h, t)) => Some(Stream.cons(h(), t()), Some(t()))
+    case Some(Empty) => Some(Stream.empty, None)
+  }
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]

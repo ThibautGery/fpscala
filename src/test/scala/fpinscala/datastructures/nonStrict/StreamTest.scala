@@ -248,4 +248,14 @@ class StreamTest extends Specification {
     }
   }
 
+  "the tails function" should {
+    "return Empty for an empty stream" in {
+      Stream.empty[Int].tails.map(_.toList).toList must_== List(List())
+    }
+
+    "return the tails for an stream" in {
+      Stream(1, 2, 3).tails.map(_.toList).toList must_== List(List(1,2,3), List(2,3), List(3), List())
+    }
+  }
+
 }
