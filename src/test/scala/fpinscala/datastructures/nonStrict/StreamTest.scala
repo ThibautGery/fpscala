@@ -200,15 +200,29 @@ class StreamTest extends Specification {
 
   "the zipWith function" should {
     "return Empty if no element for the first one" in {
-      Stream.empty[Int].zipWith(Stream("toto", "tata"))((a:Int, b:String) => {a + b.length}) must_== Empty
+      Stream.empty[Int].zipWith(Stream("toto", "tata"))((a, b) => {a + b.length}) must_== Empty
     }
 
-    "return the mapped element if the stream is not empty" in {
-      Stream(1, 2, 3).zipWith(Stream.empty[String])((a:Int, b:String) => {a + b.length}) must_== Empty
+    "rreturn Empty if no element for the second one" in {
+      Stream(1, 2, 3).zipWith(Stream.empty[String])((a, b) => {a + b.length}) must_== Empty
     }
 
     "return the combine data" in {
-      Stream(1, 2, 3).zipWith(Stream("toto", "ta"))((a:Int, b:String) => {a + b.length}).toList must_== List(5, 4)
+      Stream(1, 2, 3).zipWith(Stream("toto", "ta"))((a, b) => {a + b.length}).toList must_== List(5, 4)
+    }
+  }
+
+  "the zipAll function" should {
+    "return None if no element for the first one" in {
+      Stream.empty[Int].zipAll(Stream("toto", "tata")).toList must_== List((None, Some("toto")), (None, Some("tata")))
+    }
+
+    "eturn None if no element for the second one" in {
+      Stream(1, 2, 3).zipAll(Stream.empty[String]).toList must_== List((Some(1), None), (Some(2), None), (Some(3), None))
+    }
+
+    "return the combine data" in {
+      Stream(1, 2, 3).zipAll(Stream("toto", "tata")).toList must_== List((Some(1), Some("toto")), (Some(2), Some("tata")), (Some(3), None))
     }
   }
 
