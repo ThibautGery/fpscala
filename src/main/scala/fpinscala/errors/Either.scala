@@ -1,5 +1,4 @@
-package fpinscala.datastructures
-
+package fpinscala.errors
 
 sealed trait Either[+E, +A] {
   def map[B](f: A => B): Either[E, B] = this match {
@@ -37,11 +36,11 @@ object Either {
 
   def traverse[E, A, B](as: List[A])(f: A => Either[E, B]):
   Either[E, List[B]] = {
-    List.foldRight[A, Either[E, List[B]]](as, Right(Nil))((item, accEtr) => {
+    as.foldRight[Either[E, List[B]]](Right(Nil))((item, accEtr) => {
       for {
         v <- f(item)
         acc <- accEtr
-      } yield Cons(v, acc)
+      } yield v :: acc
     })
   }
 }

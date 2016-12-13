@@ -1,12 +1,13 @@
-package part2
+package fpinscala.intro
 
 import org.specs2.mutable.Specification
+
 
 
 class BasicTest extends Specification {
   "Fibonacci" should {
     "return an empty list when asking 0 number" in {
-      Basics.fib(0) must be empty
+      Basics.fib(0) must have length 0
     }
 
     "return 0 list when asking 1 number" in {

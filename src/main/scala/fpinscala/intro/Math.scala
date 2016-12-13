@@ -1,4 +1,4 @@
-package fpinscala
+package fpinscala.intro
 
 /**
   * Created by thibautgery on 1/12/16.

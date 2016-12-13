@@ -1,4 +1,4 @@
-package fpinscala.datastructures.nonStrict
+package fpinscala.laziness
 
 import scala.annotation.tailrec
 

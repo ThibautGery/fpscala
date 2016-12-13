@@ -1,4 +1,4 @@
-package fpinscala.datastructures
+package fpinscala.errors
 
 import org.specs2.mutable.Specification
 

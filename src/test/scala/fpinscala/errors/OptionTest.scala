@@ -1,4 +1,4 @@
-package fpinscala.datastructures
+package fpinscala.errors
 
 import org.specs2.mutable.Specification
 
@@ -58,11 +58,11 @@ class OptionTest extends Specification {
     }
 
     "return None for Some if the function return false" in {
-      Some(- 2).filter( a => a > 0 ) must_== None
+      Some(- 2).filter(a => a > 0 ) must_== None
     }
 
     "return Some for Some if the function return true" in {
-      Some(45).filter( a => a > 0 ) must_== Some(45)
+      Some(45).filter(a => a > 0 ) must_== Some(45)
     }
   }
 
