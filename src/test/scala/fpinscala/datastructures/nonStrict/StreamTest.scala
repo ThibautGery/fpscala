@@ -217,12 +217,34 @@ class StreamTest extends Specification {
       Stream.empty[Int].zipAll(Stream("toto", "tata")).toList must_== List((None, Some("toto")), (None, Some("tata")))
     }
 
-    "eturn None if no element for the second one" in {
+    "return None if no element for the second one" in {
       Stream(1, 2, 3).zipAll(Stream.empty[String]).toList must_== List((Some(1), None), (Some(2), None), (Some(3), None))
     }
 
     "return the combine data" in {
       Stream(1, 2, 3).zipAll(Stream("toto", "tata")).toList must_== List((Some(1), Some("toto")), (Some(2), Some("tata")), (Some(3), None))
+    }
+  }
+
+  "the startWith function" should {
+    "return false if no element for the first one" in {
+      Stream.empty[Int].startsWith(Stream(1, 2)) must_== false
+    }
+
+    "return false if no element for the second one" in {
+      Stream(1, 2, 3).startsWith(Stream.empty[Int]) must_== false
+    }
+
+    "return false if not the same" in {
+      Stream(1, 2, 3).startsWith(Stream(2, 3)) must_== false
+    }
+
+    "return true the same" in {
+      Stream(1, 2, 3).startsWith(Stream(1, 2, 3)) must_== true
+    }
+
+    "return true start with" in {
+      Stream(1, 2, 3).startsWith(Stream(1, 2)) must_== true
     }
   }
 
