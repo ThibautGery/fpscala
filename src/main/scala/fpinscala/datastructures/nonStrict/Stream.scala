@@ -40,6 +40,8 @@ sealed trait Stream[+A] {
     case _ => z
   }
 
+  def scanRight[B](z: => B)(f: (A, => B) => B): Stream[B] = this.tails.map(_.foldRight(z)(f))
+
   def zipWith[B, C](s2: Stream[B])(f: (A, B) => C): Stream[C] = Stream.unfold((this, s2)) {
     case (Empty, _) => None
     case (_, Empty) => None
@@ -92,13 +94,6 @@ sealed trait Stream[+A] {
     if(s == Empty) false else loop(this, s)
   }
 
-  def tails2: Stream[Stream[A]] = Stream.unfold[Stream[A], Option[Stream[A]]](Some(this)) {
-    case None => None
-    case Some(v) => v match {
-      case Cons(h, t) => Some(Stream.cons(h(), t()), Some(t()))
-      case Empty => Some(Stream.empty, None)
-    }
-  }
 
   def tails: Stream[Stream[A]] = Stream.unfold[Stream[A], Option[Stream[A]]](Some(this)) {
     case None => None
