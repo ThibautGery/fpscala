@@ -197,4 +197,19 @@ class StreamTest extends Specification {
       Stream.fibs.take(6).toList must_== List(0, 1, 1, 2, 3, 5)
     }
   }
+
+  "the zipWith function" should {
+    "return Empty if no element for the first one" in {
+      Stream.empty[Int].zipWith(Stream("toto", "tata"))((a:Int, b:String) => {a + b.length}) must_== Empty
+    }
+
+    "return the mapped element if the stream is not empty" in {
+      Stream(1, 2, 3).zipWith(Stream.empty[String])((a:Int, b:String) => {a + b.length}) must_== Empty
+    }
+
+    "return the combine data" in {
+      Stream(1, 2, 3).zipWith(Stream("toto", "ta"))((a:Int, b:String) => {a + b.length}).toList must_== List(5, 4)
+    }
+  }
+
 }

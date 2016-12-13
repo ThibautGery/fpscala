@@ -40,6 +40,12 @@ sealed trait Stream[+A] {
     case _ => z
   }
 
+  def zipWith[B, C](s2: Stream[B])(f: (A, B) => C): Stream[C] = Stream.unfold((this, s2)) {
+    case (Empty, _) => None
+    case (_, Empty) => None
+    case (Cons(h1, t1), Cons(h2, t2)) => Some((f(h1(), h2()), (t1(), t2())))
+  }
+
   def headOption: Option[A] = foldRight[Option[A]](None)((i, _) => Some(i))
 
   def exists(p: A => Boolean): Boolean = foldRight(false)((i, acc) => p(i) || acc)
