@@ -258,4 +258,22 @@ class StreamTest extends Specification {
     }
   }
 
+  "The hasSubsequence function" should {
+    "return false when they is no subsequence" in {
+      Stream(1, 2, 3).hasSubsequence(Stream(4, 5)) must_== false
+      Stream(1, 2, 4, 3, 6).hasSubsequence(Stream(1, 3)) must_== false
+    }
+
+    "return true when the subsequence equal the list" in {
+      Stream(1, 2, 3).hasSubsequence(Stream(1, 2, 3)) must_== true
+    }
+
+    "return true when there is the subsequence is the list" in {
+      Stream(1, 2, 3).hasSubsequence(Stream(3)) must_== true
+      Stream(1, 2, 3).hasSubsequence(Stream(2, 3)) must_== true
+      Stream(1, 2, 3, 4, 2, 3, 4).hasSubsequence(Stream(2, 3, 4)) must_== true
+
+    }
+  }
+
 }
