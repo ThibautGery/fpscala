@@ -35,6 +35,10 @@ object RNG {
     (f(a, b), rng3)
   }
 
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] =
+    fs.foldRight(unit[List[A]](Nil))(map2(_, _)((x, xs) => x :: xs))
+
+
   def both[A,B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] = map2(ra, rb)((_, _))
 
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
@@ -67,11 +71,5 @@ object RNG {
     ((v1, v2, v3), gen3)
   }
 
-  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
-    (0 until count).foldLeft[(List[Int], RNG)]((Nil, rng))((acc, _) => {
-      val (list, rng1): (List[Int], RNG) = acc
-      val (int, rng2): (Int, RNG) = rng1.nextInt
-      (int :: list, rng2)
-    })
-  }
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) =  sequence(List.fill(count)(int))(rng)
 }
