@@ -73,4 +73,14 @@ class SimpleRNGTest extends Specification with ScalaCheck with Mockito {
       v1 must_!= v3
     }
   }
+
+  "The ints function" should {
+    "generate a list of distinct integer"  in prop { (seed: Long) =>
+      val length = 4
+      val rng = SimpleRNG(seed)
+      val (listOfInts, _) = RNG.ints(length)(rng)
+      listOfInts must haveLength(length)
+      listOfInts.toSet must haveLength(length)
+    }
+  }
 }

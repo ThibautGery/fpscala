@@ -43,4 +43,12 @@ object RNG {
     val (v3, gen3) = double(gen2)
     ((v1, v2, v3), gen3)
   }
+
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
+    (0 until count).foldLeft[(List[Int], RNG)]((Nil, rng))((acc, _) => {
+      val (list, rng1): (List[Int], RNG) = acc
+      val (int, rng2): (Int, RNG) = rng1.nextInt
+      (int :: list, rng2)
+    })
+  }
 }
