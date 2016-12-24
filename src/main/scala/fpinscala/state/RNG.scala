@@ -41,6 +41,10 @@ object RNG {
     (double, gen)
   }
 
+  def doubleWithMap(rng: RNG): (Double, RNG) = map(nonNegativeInt) {
+    int => int.toDouble / Int.MaxValue
+  }(rng)
+
   def intDouble(rng: RNG): ((Int, Double), RNG) = {
     val (intV, gen1) = rng.nextInt
     val (doubleV, gen2) = double(gen1)

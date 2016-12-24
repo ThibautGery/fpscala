@@ -41,8 +41,11 @@ class SimpleRNGTest extends Specification with ScalaCheck with Mockito {
   "The double function" should {
     "return a double superior to 0 and strictly inferior to 1" in prop { (seed: Long) =>
       val rng = SimpleRNG(seed)
-      val (randomNumber, _) = RNG.double(rng)
-      randomNumber must be_>=(0.0) and be_<(1.0)
+      val (randomNumber1, _) = RNG.double(rng)
+      val (randomNumber2, _) = RNG.doubleWithMap(rng)
+      randomNumber1 must be_>=(0.0) and be_<(1.0)
+      randomNumber2 must be_>=(0.0) and be_<(1.0)
+      randomNumber1 must_== randomNumber2
     }.set(minTestsOk = 200, workers = 3)
   }
 
