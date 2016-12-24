@@ -2,8 +2,10 @@ package fpinscala.state
 
 import org.specs2.ScalaCheck
 import org.specs2.mutable.Specification
+import org.specs2.mock.Mockito
 
-class SimpleRNGTest extends Specification with ScalaCheck{
+
+class SimpleRNGTest extends Specification with ScalaCheck with Mockito {
   "this is a specific property" >> prop { (a: Int, b: Int) =>
     (a + b) must_== (b + a)
   }
@@ -19,6 +21,20 @@ class SimpleRNGTest extends Specification with ScalaCheck{
       rand1 must_== rand2
       rand1 must_!= rand3
     }.set(minTestsOk = 200, workers = 3)
+  }
 
+  "The nonNegativeInt function" should {
+    "return the only positive value" in prop { (seed: Long) =>
+      val rng = SimpleRNG(seed)
+      val (randomNumber, _) = RNG.nonNegativeInt(rng)
+      randomNumber must be_>=(0)
+    }.set(minTestsOk = 200, workers = 3)
+
+    "return a positive value if the value generated is Int.MinValue" in {
+      val rng = mock[RNG]
+      rng.nextInt returns((Int.MinValue, SimpleRNG(34)))
+      val (randomNumber, _) = RNG.nonNegativeInt(rng)
+      randomNumber must be_>=(0)
+    }
   }
 }
