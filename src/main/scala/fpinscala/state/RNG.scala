@@ -8,8 +8,6 @@ trait RNG {
 
 case class SimpleRNG(seed: Long) extends RNG {
 
-  val int: Rand[Int] = _.nextInt
-
   def nextInt: (Int, RNG) = {
     val newSeed = (seed * 0x5DEECE66DL + 0xBL) & 0xFFFFFFFFFFFFL
     val nextRNG = SimpleRNG(newSeed)
@@ -29,6 +27,16 @@ object RNG {
     (f(a), rng2)
   }
 
+  val int: Rand[Int] = _.nextInt
+
+  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = rng => {
+    val (a, rng2) = ra(rng)
+    val (b, rng3) = rb(rng2)
+    (f(a, b), rng3)
+  }
+
+  def both[A,B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] = map2(ra, rb)((_, _))
+
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
     val (v, rng2) = rng.nextInt
     if(v == Int.MinValue) nonNegativeInt(rng2)
@@ -45,16 +53,12 @@ object RNG {
     int => int.toDouble / Int.MaxValue
   }(rng)
 
-  def intDouble(rng: RNG): ((Int, Double), RNG) = {
-    val (intV, gen1) = rng.nextInt
-    val (doubleV, gen2) = double(gen1)
-    ((intV, doubleV), gen2)
-  }
+  def intDouble(rng: RNG) = randIntDouble(rng)
 
-  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
-    val ((intV,doubleV), gen) = intDouble(rng)
-    ((doubleV, intV), gen)
-  }
+  def doubleInt(rng: RNG) = randDoubleInt(rng)
+
+  val randIntDouble: Rand[(Int, Double)] = both(int, double)
+  val randDoubleInt: Rand[(Double, Int)] = both(double, int)
 
   def double3(rng: RNG): ((Double, Double, Double), RNG) = {
     val (v1, gen1) = double(rng)
