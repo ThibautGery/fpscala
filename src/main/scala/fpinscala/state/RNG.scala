@@ -19,4 +19,10 @@ object RNG {
     if(v == Int.MinValue) nonNegativeInt(rng2)
     else (Math.abs(v), rng2)
   }
+
+  def double(rng: RNG): (Double, RNG) = {
+    val (number, gen) = nonNegativeInt(rng)
+    val double = number / Int.MaxValue
+    (double, gen)
+  }
 }
