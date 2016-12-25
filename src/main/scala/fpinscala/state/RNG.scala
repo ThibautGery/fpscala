@@ -1,7 +1,5 @@
 package fpinscala.state
 
-import fpinscala.state.RNG.Rand
-
 trait RNG {
   def nextInt: (Int, RNG)
 }
@@ -21,6 +19,19 @@ object RNG {
   type Rand[+A] = RNG => (A, RNG)
 
   def unit[A](a: A): Rand[A] = (rng) => (a, rng)
+
+  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = rng => {
+    val (a, rng2) = f(rng)
+    val (b, rng3) = g(a)(rng2)
+    (b, rng3)
+  }
+
+  def nonNegativeLessThan(n: Int): Rand[Int] = flatMap(nonNegativeInt) {
+    a =>
+      val mod = a % n
+      if (a + (n - 1) - mod >= 0) unit(mod)
+      else nonNegativeLessThan(n)
+  }
 
   def map[A,B](s: Rand[A])(f: A => B): Rand[B] = rng => {
     val (a, rng2) = s(rng)
