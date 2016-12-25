@@ -46,7 +46,7 @@ object RNG {
       b => unit(f(a,b))
     }
   }
-  
+
   def sequence[A](fs: List[Rand[A]]): Rand[List[A]] =
     fs.foldRight(unit[List[A]](Nil))(map2(_, _)((x, xs) => x :: xs))
 
@@ -82,6 +82,8 @@ object RNG {
     val (v3, gen3) = double(gen2)
     ((v1, v2, v3), gen3)
   }
+
+  def rollDie: Rand[Int] = map(nonNegativeLessThan(6))(_ + 1)
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) =  sequence(List.fill(count)(int))(rng)
 }

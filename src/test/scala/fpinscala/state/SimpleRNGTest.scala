@@ -95,4 +95,12 @@ class SimpleRNGTest extends Specification with ScalaCheck with Mockito {
       listOfInts.toSet must haveLength(length)
     }
   }
+
+  "The rolldive Than function" should {
+    "return the only positive value below the 6 (including)" in prop { (seed: Long) =>
+      val rng = SimpleRNG(seed)
+      val (randomNumber, _) = RNG.rollDie(rng)
+      randomNumber must be_>(0) and be_<=(6)
+    }.set(minTestsOk = 200, workers = 3)
+  }
 }
