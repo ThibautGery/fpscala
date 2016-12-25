@@ -1,7 +1,5 @@
 package fpinscala.state
 
-import com.sun.tools.doclint.HtmlTag.Flag
-
 trait RNG {
   def nextInt: (Int, RNG)
 }
