@@ -1,5 +1,7 @@
 package fpinscala.state
 
+import com.sun.tools.doclint.HtmlTag.Flag
+
 trait RNG {
   def nextInt: (Int, RNG)
 }
@@ -33,19 +35,18 @@ object RNG {
       else nonNegativeLessThan(n)
   }
 
-  def map[A,B](s: Rand[A])(f: A => B): Rand[B] = rng => {
-    val (a, rng2) = s(rng)
-    (f(a), rng2)
+  def map[A,B](s: Rand[A])(f: A => B): Rand[B] = flatMap(s) {
+    a => unit(f(a))
   }
 
   val int: Rand[Int] = _.nextInt
 
-  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = rng => {
-    val (a, rng2) = ra(rng)
-    val (b, rng3) = rb(rng2)
-    (f(a, b), rng3)
+  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = flatMap(ra) {
+    a => flatMap(rb) {
+      b => unit(f(a,b))
+    }
   }
-
+  
   def sequence[A](fs: List[Rand[A]]): Rand[List[A]] =
     fs.foldRight(unit[List[A]](Nil))(map2(_, _)((x, xs) => x :: xs))
 
