@@ -44,4 +44,13 @@ class MachineTest extends Specification {
       Machine.simulateMachine(List(Coin, Turn, Coin, Turn)).run(machine) must_== ((12, 3), Machine(locked = true, 3, 12))
     }
   }
+
+  "modify machine state" should {
+    "update the state" in {
+      val machine = Machine(locked = true, 0, 0)
+      State.modify[Machine]( m => {
+        Machine(!m.locked, m.candies, m.coins)
+      }).run(machine) must_== ((), Machine(locked = false, 0, 0))
+    }
+  }
 }
