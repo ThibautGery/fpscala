@@ -25,4 +25,16 @@ class ParTest extends Specification {
       result(exec).get must_== 6
     }
   }
+
+  "asyncF" should {
+    def sum2(ints: Seq[Int]): Int = ints.sum
+
+    "ouput a Par object" in {
+      val l = List(1, 2, 3)
+      val expect = sum(l)
+      val actual = Par.asyncF(sum2)(l)
+
+      expect(exec).get must_== actual(exec).get
+    }
+  }
 }

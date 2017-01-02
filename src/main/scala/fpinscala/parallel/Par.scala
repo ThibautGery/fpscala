@@ -25,4 +25,8 @@ object Par {
   def fork[A](a: => Par[A]): Par[A] = es => es.submit(new Callable[A] {
     def call = a(es).get
   })
+
+  def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
+
+  def asyncF[A,B](f: A => B): A => Par[B] =  a => lazyUnit(f(a))
 }
