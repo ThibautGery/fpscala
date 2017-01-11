@@ -41,4 +41,9 @@ object Par {
       (a, la) => a :: la
     }
   }
+
+  def parMap[A,B](ps: List[A])(f: A => B): Par[List[B]] = fork {
+    val fbs: List[Par[B]] = ps.map(asyncF(f))
+    sequence(fbs)
+  }
 }

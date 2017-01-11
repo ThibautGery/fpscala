@@ -60,4 +60,11 @@ class ParTest extends Specification {
       Par.sequence(l)(exec).get must_== List(1, 2)
     }
   }
+
+  "parMap" should {
+    "map over the item" in {
+      val l = List(1, 2)
+      Par.parMap(l)(_ + 1)(exec).get must_== List(2, 3)
+    }
+  }
 }
