@@ -53,4 +53,11 @@ class ParTest extends Specification {
       sortedPar(exec).get must_== List(1, 2, 3)
     }
   }
+
+  "sequence" should {
+    "a list of par as a par of list" in {
+      val l = List(Par.unit(1), Par.unit(2))
+      Par.sequence(l)(exec).get must_== List(1, 2)
+    }
+  }
 }
