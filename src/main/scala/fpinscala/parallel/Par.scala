@@ -22,6 +22,8 @@ object Par {
     UnitFuture(f(af.get, bf.get))
   }
 
+  def run[A](s: ExecutorService)(a: Par[A]): Future[A] = a(s)
+
   def fork[A](a: => Par[A]): Par[A] = es => es.submit(new Callable[A] {
     def call = a(es).get
   })

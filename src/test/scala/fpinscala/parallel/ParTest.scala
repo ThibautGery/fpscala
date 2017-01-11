@@ -37,4 +37,10 @@ class ParTest extends Specification {
       expect(exec).get must_== actual(exec).get
     }
   }
+
+  "run" should {
+    "compute the Par function" in {
+      Par.run(exec)(Par.unit(1)).get() must_== 1
+    }
+  }
 }
