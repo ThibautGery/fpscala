@@ -67,4 +67,11 @@ class ParTest extends Specification {
       Par.parMap(l)(_ + 1)(exec).get must_== List(2, 3)
     }
   }
+
+  "parFilter" should {
+    "filter the collection" in {
+      val l = List(1, 2)
+      Par.parFilter(l)(_ % 2 == 0)(exec).get must_== List(2)
+    }
+  }
 }
