@@ -43,4 +43,14 @@ class ParTest extends Specification {
       Par.run(exec)(Par.unit(1)).get() must_== 1
     }
   }
+
+  "sortPar" should {
+    "sort the list" in {
+      val l = Par.unit(List(1, 3, 2))
+
+      val sortedPar = Par.sortPar(l)
+
+      sortedPar(exec).get must_== List(1, 2, 3)
+    }
+  }
 }
